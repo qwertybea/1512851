@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="LANGUAGE">你好</string>
+    <bool name="is_portrait">false</bool>
+    <bool name="is_landscape">false</bool>
+</resources>
