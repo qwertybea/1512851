@@ -3,4 +3,8 @@
     <string name="LANGUAGE">你好</string>
     <bool name="is_portrait">false</bool>
     <bool name="is_landscape">false</bool>
+
+    <string name="T_HAUTEUR">Hauteur</string>
+    <string name="T_LARGEUR">Largeur</string>
+    <string name="T_POUR_GAGNER">Pour gagner</string>
 </resources>
