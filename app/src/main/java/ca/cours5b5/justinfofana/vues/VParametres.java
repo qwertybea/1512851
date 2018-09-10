@@ -3,14 +3,16 @@ package ca.cours5b5.justinfofana.vues;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import ca.cours5b5.justinfofana.R;
 import ca.cours5b5.justinfofana.global.GConstantes;
 
-public class VParametres extends ConstraintLayout implements Vue {
+public class VParametres extends Vue {
 
+    static { Log.d("Atelier04", Vue.class.getSimpleName() + "::static"); }
 
     public VParametres(android.content.Context context) {
         super(context);

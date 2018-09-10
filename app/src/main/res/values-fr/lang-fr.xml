@@ -5,4 +5,5 @@
     <string name="T_HAUTEUR">Hauteur</string>
     <string name="T_LARGEUR">Largeur</string>
     <string name="T_POUR_GAGNER">Pour gagner</string>
+    <string name="B_PARAMETRE">Paramètre</string>
 </resources>
