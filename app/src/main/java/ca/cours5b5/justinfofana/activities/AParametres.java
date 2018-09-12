@@ -5,8 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.text.MessageFormat;
+import java.util.Map;
 
 import ca.cours5b5.justinfofana.R;
+import ca.cours5b5.justinfofana.global.DebugTools;
+import ca.cours5b5.justinfofana.modeles.MParametres;
+import ca.cours5b5.justinfofana.serialisation.Jsonification;
 
 public class AParametres extends Activite {
 
@@ -15,7 +19,47 @@ public class AParametres extends Activite {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
 
+            atelier2();
+
+            if (savedInstanceState != null) {
+                this.restaurerParametres(savedInstanceState);
+            }
+
+            setContentView(R.layout.activity_parametres);
+        } catch (Exception e) {
+            Log.e("error05", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void restaurerParametres(Bundle savedInstanceState) {
+        String json = savedInstanceState.getString("Atelier05");
+        Map<String, Object> objetJson = Jsonification.enObjetJson(json);
+        MParametres.instance.aPartirObjetJson(objetJson);
+        Log.d("Atelier05", this.getClass().getSimpleName() + "::restaurerParametres, " + "json:\n" + json);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        this.sauvegarderParametres(outState);
+    }
+
+    private void sauvegarderParametres(Bundle outState) {
+        Map<String, Object> objetJson = MParametres.instance.enObjetJson();
+
+        String json = Jsonification.enChaine(objetJson);
+
+        outState.putString("Atelier05", json);
+
+        Log.d("Atelier05", this.getClass().getSimpleName() + "::sauvegarderParametres, " + "json:\n" + json);
+    }
+
+
+    private void atelier2() {
         String language;
         String orientation;
         try {
@@ -35,7 +79,5 @@ public class AParametres extends Activite {
 
         String message = MessageFormat.format("{0}! ({1})", language, orientation);
         Log.d("MonEtiquette", message);
-
-        setContentView(R.layout.activity_parametres);
     }
 }
