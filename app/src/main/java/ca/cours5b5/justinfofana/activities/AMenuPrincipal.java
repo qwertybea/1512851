@@ -19,7 +19,7 @@ public class AMenuPrincipal extends Activite {
 
         Button boutonParametres = this.findViewById(R.id.button_parametres);
 
-        // TODO make this better
+        // FIXME: make this better
         boutonParametres.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
