@@ -61,7 +61,7 @@ public class VParametres extends Vue implements AdapterView.OnItemSelectedListen
         adapterPourGagner.addAll(MParametres.instance.getChoixPourGagner());
 
         positionSpinners();
-
+        //DebugTools.messageLog(this,"onFinishInflate");
     }
 
     private void positionSpinners() {

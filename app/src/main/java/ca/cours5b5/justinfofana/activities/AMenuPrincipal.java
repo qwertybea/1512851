@@ -27,5 +27,6 @@ public class AMenuPrincipal extends Activite {
                 AMenuPrincipal.this.startActivity(monIntention);
             }
         });
+
     }
 }
