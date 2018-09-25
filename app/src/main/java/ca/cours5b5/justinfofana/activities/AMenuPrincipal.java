@@ -19,11 +19,20 @@ public class AMenuPrincipal extends Activite {
 
         Button boutonParametres = this.findViewById(R.id.button_parametres);
 
+        Button boutonPartie = this.findViewById(R.id.button_partie);
+
         // FIXME: make this better
         boutonParametres.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent monIntention = new Intent(AMenuPrincipal.this, AParametres.class);
+                AMenuPrincipal.this.startActivity(monIntention);
+            }
+        });
+        boutonPartie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent monIntention = new Intent(AMenuPrincipal.this, APartie.class);
                 AMenuPrincipal.this.startActivity(monIntention);
             }
         });

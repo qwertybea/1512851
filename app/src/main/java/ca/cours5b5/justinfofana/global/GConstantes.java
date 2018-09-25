@@ -17,4 +17,16 @@ public class GConstantes {
     public static final int SCORE_GAGNANT_MAX = 4;
     public static final int SCORE_GAGNANT_MIN = 3;
     public static final int SCORE_GAGNANT_DEFAUT = 4;
+
+
+
+    public static final int GRILLE_MARGIN = 5;
+
+    public static final int RANGE_ENTETE = 0;
+    public static final int ENTETE_POIDS_COLONNE = 1;
+    public static final int ENTETE_POIDS_RANGE = 3;
+    public static final int CASE_POIDS_COLONNE = 1;
+    public static final int CASE_POIDS_RANGE = 1;
+
+
 }

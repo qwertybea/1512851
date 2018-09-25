@@ -39,7 +39,7 @@ public class AParametres extends Activite {
     private void restaurerParametres(Bundle savedInstanceState) {
         String json = savedInstanceState.getString(this.cle);
         Map<String, Object> objetJson = Jsonification.enObjetJson(json);
-        MParametres.instance.aPartirObjetJson(objetJson);
+        MParametres.getInstance().aPartirObjetJson(objetJson);
         Log.d("Atelier05", this.getClass().getSimpleName() + "::restaurerParametres, " + "clé: " + cle);
         Log.d("Atelier05", this.getClass().getSimpleName() + "::restaurerParametres, " + "json:\n" + json);
     }
@@ -52,7 +52,7 @@ public class AParametres extends Activite {
     }
 
     private void sauvegarderParametres(Bundle outState) {
-        Map<String, Object> objetJson = MParametres.instance.enObjetJson();
+        Map<String, Object> objetJson = MParametres.getInstance().enObjetJson();
 
         String json = Jsonification.enChaine(objetJson);
 

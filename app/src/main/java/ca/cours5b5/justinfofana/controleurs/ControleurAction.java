@@ -32,10 +32,10 @@ public class ControleurAction {
     }
 
 
-    public static Action demanderAction(GCommande commande)
+    public static Action demanderAction(GCommande commande) {return null;}
 
 
-    public static void fournirAction(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur)
+    public static void fournirAction(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur) {}
     /*
      * En plus d'enregistrer le fournisseur
      * On doit vérifier si l'ajout du fournisseur a rendu une action en file d'attente exécutable
@@ -43,10 +43,10 @@ public class ControleurAction {
      */
 
 
-    static void executerDesQuePossible(Action action)
+    static void executerDesQuePossible(Action action) {}
 
 
-    private static void executerActionsExecutables()
+    private static void executerActionsExecutables() {}
     /*
      * Avant d'exécuter l'action:
      *     - l'enlever de la file d'attente
@@ -56,19 +56,19 @@ public class ControleurAction {
      *
      */
 
-    static boolean siActionExecutable(Action action)
+    static boolean siActionExecutable(Action action) {return false;}
 
-    private static void lancerObservationSiApplicable(Action action)
+    private static void lancerObservationSiApplicable(Action action) {}
 
-    private static synchronized void executerMaintenant(Action action)
+    private static synchronized void executerMaintenant(Action action) {}
     /*
      * BONUS: à quoi sert le synchronized?
      *
      */
 
 
-    private static void enregistrerFournisseur(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur)
+    private static void enregistrerFournisseur(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur) {}
 
-    private static void ajouterActionEnFileDAttente(Action action)
+    private static void ajouterActionEnFileDAttente(Action action) {}
 
 }

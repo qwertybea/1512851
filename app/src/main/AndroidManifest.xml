@@ -19,6 +19,10 @@
 
         <activity android:name=".activities.AParametres">
         </activity>
+        <activity android:name=".activities.APartie"
+            android:screenOrientation="landscape"
+            >
+        </activity>
     </application>
 
 </manifest>

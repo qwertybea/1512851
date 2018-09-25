@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ca.cours5b5.justinfofana.vues.VPartie
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ca.cours5b5.justinfofana.vues.VGrille
+        android:id="@+id/GridLayout_partie"
+        android:layout_width="576dp"
+        android:layout_height="295dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+    </ca.cours5b5.justinfofana.vues.VGrille>
+</ca.cours5b5.justinfofana.vues.VPartie>

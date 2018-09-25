@@ -56,18 +56,18 @@ public class VParametres extends Vue implements AdapterView.OnItemSelectedListen
         spinnerLargeur.setAdapter(adapterLargeur);
         spinnerPourGagner.setAdapter(adapterPourGagner);
 
-        adapterHauteur.addAll(MParametres.instance.getChoixHauteur());
-        adapterLargeur.addAll(MParametres.instance.getChoixLargeur());
-        adapterPourGagner.addAll(MParametres.instance.getChoixPourGagner());
+        adapterHauteur.addAll(MParametres.getInstance().getChoixHauteur());
+        adapterLargeur.addAll(MParametres.getInstance().getChoixLargeur());
+        adapterPourGagner.addAll(MParametres.getInstance().getChoixPourGagner());
 
         positionSpinners();
         //DebugTools.messageLog(this,"onFinishInflate");
     }
 
     private void positionSpinners() {
-        spinnerHauteur.setSelection(adapterHauteur.getPosition(MParametres.instance.hauteur));
-        spinnerLargeur.setSelection(adapterLargeur.getPosition(MParametres.instance.largeur));
-        spinnerPourGagner.setSelection(adapterPourGagner.getPosition(MParametres.instance.pourGagner));
+        spinnerHauteur.setSelection(adapterHauteur.getPosition(MParametres.getInstance().getHauteur()));
+        spinnerLargeur.setSelection(adapterLargeur.getPosition(MParametres.getInstance().getLargeur()));
+        spinnerPourGagner.setSelection(adapterPourGagner.getPosition(MParametres.getInstance().getPourGagner()));
     }
 
     // TODO call setters instead
@@ -77,11 +77,11 @@ public class VParametres extends Vue implements AdapterView.OnItemSelectedListen
         Integer leChoix = (Integer)parent.getAdapter().getItem(parent.getSelectedItemPosition());
 
         if(spinner.getId() == R.id.spinner_hauteur) {
-            MParametres.instance.hauteur = leChoix;
+            MParametres.getInstance().setHauteur(leChoix);
         } else if(spinner.getId() == R.id.spinner_largeur) {
-            MParametres.instance.largeur = leChoix;
+            MParametres.getInstance().setLargeur(leChoix);
         } else {
-            MParametres.instance.pourGagner = leChoix;
+            MParametres.getInstance().setPourGagner(leChoix);
         }
     }
 

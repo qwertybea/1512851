@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">JustinFofana</string>
     <string name="LANGUAGE">Bonjour</string>
 
     <string name="T_HAUTEUR">Hauteur</string>
     <string name="T_LARGEUR">Largeur</string>
     <string name="T_POUR_GAGNER">Pour gagner</string>
     <string name="B_PARAMETRE">Paramètre</string>
+    <string name="B_PARTIE">Jouer une partie</string>
 </resources>
