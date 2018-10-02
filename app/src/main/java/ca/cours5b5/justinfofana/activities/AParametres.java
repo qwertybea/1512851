@@ -40,8 +40,8 @@ public class AParametres extends Activite {
         String json = savedInstanceState.getString(this.cle);
         Map<String, Object> objetJson = Jsonification.enObjetJson(json);
         MParametres.getInstance().aPartirObjetJson(objetJson);
-        Log.d("Atelier05", this.getClass().getSimpleName() + "::restaurerParametres, " + "clé: " + cle);
-        Log.d("Atelier05", this.getClass().getSimpleName() + "::restaurerParametres, " + "json:\n" + json);
+        Log.d("Atelier05", this.getClass().getSimpleName() + "::restaurerParametres, clé: " + cle);
+        Log.d("Atelier05", this.getClass().getSimpleName() + "::restaurerParametres, json:\n" + json);
     }
 
     @Override
@@ -58,8 +58,8 @@ public class AParametres extends Activite {
 
         outState.putString(this.cle, json);
 
-        Log.d("Atelier05", this.getClass().getSimpleName() + "::sauvegarderParametres, " + "clé: " + cle);
-        Log.d("Atelier05", this.getClass().getSimpleName() + "::sauvegarderParametres, " + "json:\n" + json);
+        Log.d("Atelier05", this.getClass().getSimpleName() + "::sauvegarderParametres, clé: " + cle);
+        Log.d("Atelier05", this.getClass().getSimpleName() + "::sauvegarderParametres, json:\n" + json);
     }
 
 

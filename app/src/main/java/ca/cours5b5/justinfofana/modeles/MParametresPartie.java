@@ -1,11 +1,12 @@
 package ca.cours5b5.justinfofana.modeles;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import ca.cours5b5.justinfofana.exceptions.ErreurSerialisation;
 import ca.cours5b5.justinfofana.serialisation.AttributSerialisable;
 
-public class MParametresPartie extends Modele{
+public class MParametresPartie extends Modele {
     @AttributSerialisable
     private Integer hauteur;
     protected final String __hauteur = "hauteur";
@@ -26,7 +27,13 @@ public class MParametresPartie extends Modele{
      *
      */
     public static MParametresPartie aPartirMParametres(MParametres mParametres) {
-        return new MParametresPartie(mParametres.getHauteur(), mParametres.getLargeur(),mParametres.getPourGagner());
+        return new MParametresPartie(mParametres.getParametrePartie().getHauteur(),
+                mParametres.getParametrePartie().getLargeur(),
+                mParametres.getParametrePartie().getPourGagner());
+    }
+
+    public MParametresPartie cloner() {
+        return new MParametresPartie(this.hauteur, this.largeur, this.pourGagner);
     }
 
     public MParametresPartie(int hauteur, int largeur, int pourGagner) {
@@ -59,10 +66,38 @@ public class MParametresPartie extends Modele{
         this.pourGagner = pourGagner;
     }
 
-    // TODO: implémenter ces méthodes
+    // FIXME: these are the same exact methods from MParametre. seems bad
     @Override
-    public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation {}
+    public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation
+    {
+        boolean h = false, l = false, g = false;
+        for(Map.Entry<String, Object> entry : objetJson.entrySet()) {
+            if (entry.getKey().equals(__hauteur)) {
+                hauteur = Integer.valueOf((entry.getValue().toString()));
+                h = true;
+            } else if (entry.getKey().equals(__largeur)) {
+                largeur = Integer.valueOf((entry.getValue().toString()));
+                l = true;
+            } else if (entry.getKey().equals(__pourGagner)) {
+                pourGagner = Integer.valueOf((entry.getValue().toString()));
+                g = true;
+            }
+        }
+        if (!(h && l && g)) {
+            throw new ErreurSerialisation("dun goofed");
+        }
+    }
 
     @Override
-    public Map<String, Object> enObjetJson() throws ErreurSerialisation {return null;}
+    public Map<String, Object> enObjetJson() throws ErreurSerialisation
+    {
+        Map<String, Object> map = new HashMap<>();
+
+        //FIXME: if these are not strings bad things happen
+        map.put(__hauteur, hauteur.toString());
+        map.put(__largeur, largeur.toString());
+        map.put(__pourGagner, pourGagner.toString());
+
+        return map;
+    }
 }

@@ -65,23 +65,22 @@ public class VParametres extends Vue implements AdapterView.OnItemSelectedListen
     }
 
     private void positionSpinners() {
-        spinnerHauteur.setSelection(adapterHauteur.getPosition(MParametres.getInstance().getHauteur()));
-        spinnerLargeur.setSelection(adapterLargeur.getPosition(MParametres.getInstance().getLargeur()));
-        spinnerPourGagner.setSelection(adapterPourGagner.getPosition(MParametres.getInstance().getPourGagner()));
+        spinnerHauteur.setSelection(adapterHauteur.getPosition(MParametres.getInstance().getParametrePartie().getHauteur()));
+        spinnerLargeur.setSelection(adapterLargeur.getPosition(MParametres.getInstance().getParametrePartie().getLargeur()));
+        spinnerPourGagner.setSelection(adapterPourGagner.getPosition(MParametres.getInstance().getParametrePartie().getPourGagner()));
     }
 
-    // TODO call setters instead
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Spinner spinner = (Spinner) parent;
         Integer leChoix = (Integer)parent.getAdapter().getItem(parent.getSelectedItemPosition());
 
         if(spinner.getId() == R.id.spinner_hauteur) {
-            MParametres.getInstance().setHauteur(leChoix);
+            MParametres.getInstance().getParametrePartie().setHauteur(leChoix);
         } else if(spinner.getId() == R.id.spinner_largeur) {
-            MParametres.getInstance().setLargeur(leChoix);
+            MParametres.getInstance().getParametrePartie().setLargeur(leChoix);
         } else {
-            MParametres.getInstance().setPourGagner(leChoix);
+            MParametres.getInstance().getParametrePartie().setPourGagner(leChoix);
         }
     }
 

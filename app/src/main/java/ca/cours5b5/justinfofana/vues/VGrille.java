@@ -4,12 +4,15 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.ViewGroup;
 import android.widget.GridLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.cours5b5.justinfofana.global.GConstantes;
+import ca.cours5b5.justinfofana.modeles.MParametres;
+import ca.cours5b5.justinfofana.modeles.MParametresPartie;
 
 public class VGrille extends GridLayout {
 
@@ -40,18 +43,20 @@ public class VGrille extends GridLayout {
     }
 
     private void initialiser() {
-        this.creerGrille(4,4);
+        MParametresPartie mParametresPartie = MParametresPartie.aPartirMParametres(MParametres.getInstance());
+        this.creerGrille(mParametresPartie.getHauteur(), mParametresPartie.getLargeur());
     }
 
     void creerGrille(int hauteur, int largeur) {
+
         this.initialiserColonnes(largeur);
         this.ajouterEnTetes(largeur);
         this.ajouterCases(hauteur, largeur);
+
     }
 
     private void initialiserColonnes(int largeur) {
         this.colonnesDeCases = new ArrayList<>();
-
     }
 
     private void ajouterEnTetes(int largeur) {
@@ -61,21 +66,19 @@ public class VGrille extends GridLayout {
             entete = new VEntete(this.getContext(), colonne);
             this.entetes.add(entete);
             this.addView(entete, this.getMiseEnPageEntete(colonne));
-            Log.d("Atelier06", "entete : " + colonne);
         }
     }
 
     private LayoutParams getMiseEnPageEntete(int colonne) {
-        Spec specRangee = GridLayout.spec(GConstantes.RANGE_ENTETE, GConstantes.ENTETE_POIDS_RANGE);
-        Spec specColonne = GridLayout.spec(colonne, GConstantes.ENTETE_POIDS_COLONNE);
+        Spec specRangee = GridLayout.spec(GConstantes.RANGE_ENTETE, (float) GConstantes.ENTETE_POIDS_RANGE);
+        Spec specColonne = GridLayout.spec(colonne, (float) GConstantes.ENTETE_POIDS_COLONNE);
         LayoutParams params = new LayoutParams(specRangee, specColonne);
-        //params.width = 0;
-        //params.height = 0;
-        //params.setGravity(Gravity.FILL);
+        params.width = 0;
+        params.height = 0;
+        params.setGravity(Gravity.FILL);
 
         params.rightMargin = GConstantes.GRILLE_MARGIN;
         params.leftMargin = GConstantes.GRILLE_MARGIN;
-
         return params;
     }
 
@@ -85,22 +88,22 @@ public class VGrille extends GridLayout {
         }
 
         VCase vCase;
-        for (int i = 0; i < largeur; i++) {
-            for (int j = 0; j < hauteur; j++) {
-                vCase = new VCase(this.getContext(), hauteur, largeur);
+        for (int i = 0; i < hauteur; i++) {
+            for (int j = 0; j < largeur; j++) {
+                vCase = new VCase(this.getContext(), i, j);
                 this.colonnesDeCases.get(i).add(vCase);
-                this.addView(vCase, this.getMiseEnPageCase(hauteur, largeur));
+                this.addView(vCase, this.getMiseEnPageCase((hauteur - i) - 1, j));
             }
         }
     }
 
     private LayoutParams getMiseEnPageCase(int rangee, int colonne) {
-        Spec specRangee = GridLayout.spec(rangee, GConstantes.CASE_POIDS_RANGE);
-        Spec specColonne = GridLayout.spec(colonne, GConstantes.CASE_POIDS_COLONNE);
+        Spec specRangee = GridLayout.spec(rangee + 1, (float) GConstantes.CASE_POIDS_RANGE);
+        Spec specColonne = GridLayout.spec(colonne, (float) GConstantes.CASE_POIDS_COLONNE);
         LayoutParams params = new LayoutParams(specRangee, specColonne);
-        //params.width = 0;
-        //params.height = 0;
-        //params.setGravity(Gravity.FILL);
+        params.width = 0;
+        params.height = 0;
+        params.setGravity(Gravity.FILL);
 
         params.rightMargin = GConstantes.GRILLE_MARGIN;
         params.leftMargin = GConstantes.GRILLE_MARGIN;

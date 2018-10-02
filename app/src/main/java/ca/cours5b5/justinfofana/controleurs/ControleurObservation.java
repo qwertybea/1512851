@@ -3,6 +3,7 @@ package ca.cours5b5.justinfofana.controleurs;
 import java.util.Map;
 
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerObservateur;
+import ca.cours5b5.justinfofana.modeles.MParametres;
 import ca.cours5b5.justinfofana.modeles.MPartie;
 import ca.cours5b5.justinfofana.modeles.Modele;
 
@@ -21,7 +22,16 @@ public class ControleurObservation {
     }
 
 
-    public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur) {}
+    public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur) {
+        Modele modele;
+        switch (nomModele) {
+            default:
+                modele = MParametres.getInstance().getParametrePartie();
+                break;
+        }
+        observations.put(modele, listenerObservateur);
+        lancerObservation(modele);
+    }
     /* NEW
      * Enregistrer le listener dans le Map observations
      * Lancer l'observation une première fois quand on reçoit le listener

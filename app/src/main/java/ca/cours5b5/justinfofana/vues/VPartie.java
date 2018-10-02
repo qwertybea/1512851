@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.GridLayout;
 
 import ca.cours5b5.justinfofana.R;
+import ca.cours5b5.justinfofana.controleurs.ControleurObservation;
+import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.justinfofana.modeles.MPartie;
 import ca.cours5b5.justinfofana.modeles.Modele;
 
@@ -35,9 +37,17 @@ public class VPartie extends Vue {
     }
 
     private void initialiser() {
+        this.observerPartie();
     }
 
-    private void observerPartie() {}
+    private void observerPartie() {
+        ControleurObservation.observerModele("what am i?", new ListenerObservateur() {
+            @Override
+            public void reagirChangementAuModele(Modele modele) {
+
+            }
+        });
+    }
     /*
      * Appeler observer pour obtenir le modèle
      *
