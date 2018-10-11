@@ -10,6 +10,7 @@ import android.widget.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.cours5b5.justinfofana.global.DebugTools;
 import ca.cours5b5.justinfofana.global.GConstantes;
 import ca.cours5b5.justinfofana.modeles.MParametres;
 import ca.cours5b5.justinfofana.modeles.MParametresPartie;
@@ -39,12 +40,14 @@ public class VGrille extends GridLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
+
+        DebugTools.messageLog(this,"onFinishInflate");
+
         this.initialiser();
     }
 
     private void initialiser() {
-        MParametresPartie mParametresPartie = MParametresPartie.aPartirMParametres(MParametres.getInstance());
-        this.creerGrille(mParametresPartie.getHauteur(), mParametresPartie.getLargeur());
     }
 
     void creerGrille(int hauteur, int largeur) {

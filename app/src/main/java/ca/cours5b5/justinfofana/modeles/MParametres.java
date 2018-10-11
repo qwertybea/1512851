@@ -50,12 +50,27 @@ public class MParametres extends Modele {
 
     @Override
     public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation {
-        this.parametresPartie.aPartirObjetJson(objetJson);
+
+        for(Map.Entry<String, Object> entry : objetJson.entrySet()) {
+
+            if (entry.getKey().equals(__parametresPartie)) {
+
+                this.parametresPartie.aPartirObjetJson((Map<String, Object>) entry.getValue());
+
+            }
+
+        }
+
     }
 
     @Override
     public Map<String, Object> enObjetJson() throws ErreurSerialisation {
-        return this.parametresPartie.enObjetJson();
+
+        Map<String, Object> objetJson = new HashMap<>();
+
+        objetJson.put(__parametresPartie, this.getParametrePartie().enObjetJson());
+
+        return objetJson;
     }
 
     // GETTER - SETTER

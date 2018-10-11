@@ -1,9 +1,11 @@
 package ca.cours5b5.justinfofana.controleurs;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.justinfofana.modeles.MParametres;
+import ca.cours5b5.justinfofana.modeles.MParametresPartie;
 import ca.cours5b5.justinfofana.modeles.MPartie;
 import ca.cours5b5.justinfofana.modeles.Modele;
 
@@ -18,19 +20,30 @@ public class ControleurObservation {
      */
 
     static {
-
+        observations = new HashMap<>();
     }
 
 
     public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur) {
-        Modele modele;
-        switch (nomModele) {
-            default:
-                modele = MParametres.getInstance().getParametrePartie();
-                break;
+
+        if (nomModele.equals(MParametres.class.getSimpleName())) {
+
+            MParametres mParametres = MParametres.getInstance();
+
+            observations.put(mParametres, listenerObservateur);
+
+            ControleurObservation.lancerObservation(mParametres);
+
+        } else if (nomModele.equals(MPartie.class.getSimpleName())) {
+
+            partie = new MPartie(MParametresPartie.aPartirMParametres(MParametres.getInstance()));
+
+            observations.put(partie, listenerObservateur);
+
+            ControleurObservation.lancerObservation(partie);
+
         }
-        observations.put(modele, listenerObservateur);
-        lancerObservation(modele);
+
     }
     /* NEW
      * Enregistrer le listener dans le Map observations
@@ -54,7 +67,27 @@ public class ControleurObservation {
      *
      */
 
-    public static void lancerObservation(Modele modele) {}
+    public static void lancerObservation(Modele modele) {
+
+        ListenerObservateur observateur = observations.get(modele);
+
+        if (observateur != null) {
+
+            observateur.reagirNouveauModele(modele);
+
+        }
+    }
+    public static void reagirObservation(Modele modele) {
+
+        ListenerObservateur observateur = observations.get(modele);
+
+        if (observateur != null) {
+
+            observateur.reagirNouveauModele(modele);
+
+        }
+    }
+
     /*
      * sera appelé par le ControleurAction après une action!
      *
