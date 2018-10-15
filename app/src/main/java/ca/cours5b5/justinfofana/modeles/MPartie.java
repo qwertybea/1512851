@@ -2,9 +2,12 @@ package ca.cours5b5.justinfofana.modeles;
 
 import android.graphics.Color;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import ca.cours5b5.justinfofana.controleurs.ControleurAction;
+import ca.cours5b5.justinfofana.controleurs.ControleurObservation;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.justinfofana.exceptions.ErreurSerialisation;
@@ -18,6 +21,9 @@ public class MPartie extends Modele implements Fournisseur {
     @AttributSerialisable
     public MParametresPartie parametres;
     private final String __parametres = "parametres";
+    @AttributSerialisable
+    public List<Integer> coups;
+    private final String __coups = "coups";
     private MGrille grille;
     private GCouleur couleurCourante;
 
@@ -63,17 +69,66 @@ public class MPartie extends Modele implements Fournisseur {
     }
 
     @Override
-    public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation {}
-    /*
-     * Inutilisé pour l'instant
-     *
-     */
+    public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation {
+
+        List<String> coupsJson = new ArrayList<>();
+
+        for(Map.Entry<String, Object> entry : objetJson.entrySet()) {
+
+            if (entry.getKey().equals(__parametres)) {
+
+                this.parametres.aPartirObjetJson((Map<String, Object>) entry.getValue());
+
+            } else if(entry.getKey().equals(__coups)) {
+
+                coupsJson = (List<String>) entry.getValue();
+
+            }
+
+        }
+
+        this.grille = new MGrille(parametres.getLargeur());
+
+        this.initialiserCouleurCourante();
+
+        rejouerLesCoups(listeCoupsAPartirJson(coupsJson));
+
+    }
+
 
     @Override
-    public Map<String, Object> enObjetJson() throws ErreurSerialisation {return null;}
-    /*
-     * Inutilisé pour l'instant
-     *
-     */
+    public Map<String, Object> enObjetJson() throws ErreurSerialisation {
+
+        
+
+        return null;
+    }
+
+    private void rejouerLesCoups(List<Integer> coupsARejouer) {
+        for (int coup : coupsARejouer) {
+            jouerCoup(coup);
+        }
+    }
+
+    private List<Integer> listeCoupsAPartirJson(List<String> listeCoupsObjetJson) {
+        final List<Integer> listInt = new ArrayList<>();
+//        listeCoupsObjetJson.forEach((coup) -> listInt.add(Integer.parseInt(coup)));
+
+        for (String coup : listeCoupsObjetJson) {
+            listInt.add(Integer.parseInt(coup));
+        }
+
+        return listInt;
+    }
+
+    private List<String> listeCoupsEnObjetJson(List<Integer> listeCoups) {
+        final List<String> listJson = new ArrayList<>();
+
+        for (int coup : listeCoups) {
+            listJson.add(Integer.toString(coup));
+        }
+
+        return listJson;
+    }
 
 }

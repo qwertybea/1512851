@@ -14,7 +14,7 @@ public class ControleurObservation {
     private static Map<Modele, ListenerObservateur> observations;
 
     // FIXME: c'est temporaire, on va écrire un contrôleur de modèles à l'atelier09
-    private static MPartie partie;
+    public static MPartie partie;
     /*
      * L'attribut est private: la vue doit obtenir le modèle par l'observation
      */
