@@ -1,5 +1,7 @@
 package ca.cours5b5.justinfofana.modeles;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,6 +88,7 @@ public class MParametresPartie extends Modele {
         if (!(h && l && g)) {
             throw new ErreurSerialisation("dun goofed");
         }
+
     }
 
     @Override

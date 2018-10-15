@@ -1,8 +1,10 @@
 package ca.cours5b5.justinfofana.modeles;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +31,7 @@ public class MPartie extends Modele implements Fournisseur {
 
     public MPartie(MParametresPartie parametres) {
         this.parametres = parametres;
+        this.coups = new ArrayList<>();
 
         this.grille = new MGrille(parametres.getLargeur());
 
@@ -64,6 +67,7 @@ public class MPartie extends Modele implements Fournisseur {
     }
 
     protected void jouerCoup(int colonne) {
+        this.coups.add(colonne);
         this.grille.placerJeton(colonne, couleurCourante);
         prochaineCouleurCourante();
     }
@@ -92,22 +96,27 @@ public class MPartie extends Modele implements Fournisseur {
         this.initialiserCouleurCourante();
 
         rejouerLesCoups(listeCoupsAPartirJson(coupsJson));
-
     }
 
 
     @Override
     public Map<String, Object> enObjetJson() throws ErreurSerialisation {
 
-        
+        Map<String, Object> map = new HashMap<>();
 
-        return null;
+        map.put(__parametres, parametres.enObjetJson());
+        map.put(__coups, listeCoupsEnObjetJson(coups));
+
+        return map;
     }
 
     private void rejouerLesCoups(List<Integer> coupsARejouer) {
+        coups.clear();
         for (int coup : coupsARejouer) {
             jouerCoup(coup);
         }
+
+        // TODO: on aimerait bien que quelqu'un affiche les jetons maintenat
     }
 
     private List<Integer> listeCoupsAPartirJson(List<String> listeCoupsObjetJson) {

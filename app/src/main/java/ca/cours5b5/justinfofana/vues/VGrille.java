@@ -130,8 +130,6 @@ public class VGrille extends GridLayout {
         return params;
     }
 
-
-
     //FIXME: used to be : private void demanderActionEntete() {
     private Action demanderActionEntete() {
 

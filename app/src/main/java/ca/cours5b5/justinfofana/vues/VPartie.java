@@ -18,7 +18,6 @@ public class VPartie extends Vue {
 
     private VGrille grille;
 
-
     public VPartie(Context context) {
         super(context);
     }
@@ -29,6 +28,10 @@ public class VPartie extends Vue {
 
     public VPartie(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    public VGrille getGrille() {
+        return grille;
     }
 
     @Override
@@ -42,6 +45,8 @@ public class VPartie extends Vue {
         this.grille = findViewById(R.id.GridLayout_partie);
 
         this.observerPartie();
+
+        miseAjourGrille(ControleurObservation.partie);
 
     }
 

@@ -40,6 +40,5 @@ public class VCase extends AppCompatButton {
         }
 
         this.setBackgroundColor(color);
-        DebugTools.prinntStackTrace();
     }
 }
