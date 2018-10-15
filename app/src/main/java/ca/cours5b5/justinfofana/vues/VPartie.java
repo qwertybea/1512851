@@ -31,7 +31,6 @@ public class VPartie extends Vue {
         super(context, attrs, defStyleAttr);
     }
 
-
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -60,7 +59,7 @@ public class VPartie extends Vue {
 
             @Override
             public void reagirChangementAuModele(Modele modele) {
-
+                miseAjourGrille(getPartie(modele));
             }
         });
     }
@@ -82,6 +81,12 @@ public class VPartie extends Vue {
     private void initialiserGrille(MPartie partie) {
 
         this.grille.creerGrille(partie.getParametres().getHauteur(), partie.getParametres().getLargeur());
+
+    }
+
+    private void miseAjourGrille(MPartie partie) {
+
+        this.grille.afficherJetons(partie.getGrille());
 
     }
 

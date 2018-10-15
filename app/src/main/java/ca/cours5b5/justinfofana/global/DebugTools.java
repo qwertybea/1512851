@@ -29,4 +29,11 @@ public class DebugTools {
         Log.d("Atelier04", object.getClass().getSimpleName() + "::" + nomMethode);
     }
 
+    public static void prinntStackTrace() {
+        StackTraceElement[] trace = Thread.currentThread().getStackTrace();
+        for (StackTraceElement call : trace) {
+            Log.d("Atelier07", call.toString());
+        }
+    }
+
 }
