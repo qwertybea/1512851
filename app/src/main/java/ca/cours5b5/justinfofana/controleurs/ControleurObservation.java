@@ -83,7 +83,7 @@ public class ControleurObservation {
 
         if (observateur != null) {
 
-            observateur.reagirNouveauModele(modele);
+            observateur.reagirChangementAuModele(modele);
 
         }
     }

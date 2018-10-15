@@ -1,11 +1,15 @@
 package ca.cours5b5.justinfofana.controleurs;
 
+import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
+import ca.cours5b5.justinfofana.global.DebugTools;
 import ca.cours5b5.justinfofana.global.GCommande;
+import ca.cours5b5.justinfofana.modeles.Modele;
 
 public class ControleurAction {
 
@@ -14,61 +18,68 @@ public class ControleurAction {
 
     static {
 
-        /* TRUC: initialiser le Map actions comme suit:
-         *          - pour chaque GCommande
-         *               - insérer une action vide
-         *
-         * (l'avantage est qu'ensuite on a plus à tester si
-         *  une GCommande est dans le Map... elles y sont toutes!)
-         */
+        actions = new HashMap<>();
+        for (GCommande commande : GCommande.values()) {
+            actions.put(commande, new Action());
+        }
 
+        fileAttenteExecution = new LinkedHashSet<>();
 
-        /* BONUS: pour le Set fileAttenteExecution, il existe
-         *        une implémentation de Set qui préserve l'ordre
-         *        d'insertion... c'est celle-là qu'on veut!
-         *
-         * (double bonus: pourquoi?)
-         */
     }
 
+    public static Action demanderAction(GCommande commande) {
+        return actions.get(commande);
+    }
 
-    public static Action demanderAction(GCommande commande) {return null;}
+    public static void fournirAction(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur) {
+        Action action = actions.get(commande);
+        action.fournisseur = fournisseur;
+        action.listenerFournisseur = listenerFournisseur;
 
+        executerActionsExecutables();
+    }
 
-    public static void fournirAction(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur) {}
-    /*
-     * En plus d'enregistrer le fournisseur
-     * On doit vérifier si l'ajout du fournisseur a rendu une action en file d'attente exécutable
-     *
-     */
+    static void executerDesQuePossible(Action action) {
+        ajouterActionEnFileDAttente(action);
+        executerActionsExecutables();
+    }
 
+    private static void executerActionsExecutables() {
 
-    static void executerDesQuePossible(Action action) {}
+        for (Action action : fileAttenteExecution) {
+            if(siActionExecutable(action)) {
+                fileAttenteExecution.remove(action);
+                executerMaintenant(action);
+                lancerObservationSiApplicable(action);
+            }
+        }
+    }
 
+    static boolean siActionExecutable(Action action) {
+        return action.listenerFournisseur != null;
+    }
 
-    private static void executerActionsExecutables() {}
-    /*
-     * Avant d'exécuter l'action:
-     *     - l'enlever de la file d'attente
-     *
-     * Après avoir éxécuté l'action:
-     *     - lancer l'observation du fournisseur de cette action (si possible)
-     *
-     */
+    private static void lancerObservationSiApplicable(Action action) {
+        if (action.fournisseur instanceof Modele) {
 
-    static boolean siActionExecutable(Action action) {return false;}
+            //FIXME: maybe i went wrong with my names somewhere
+//            ControleurObservation.lancerObservation((Modele) action.fournisseur);
+            ControleurObservation.reagirObservation((Modele) action.fournisseur);
+        }
+    }
 
-    private static void lancerObservationSiApplicable(Action action) {}
+    private static synchronized void executerMaintenant(Action action) {
+        action.listenerFournisseur.executer(action.args);
+    }
 
-    private static synchronized void executerMaintenant(Action action) {}
-    /*
-     * BONUS: à quoi sert le synchronized?
-     *
-     */
+    private static void enregistrerFournisseur(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur) {
+        Action action = actions.get(commande);
+        action.fournisseur = fournisseur;
+        action.listenerFournisseur = listenerFournisseur;
+    }
 
-
-    private static void enregistrerFournisseur(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur) {}
-
-    private static void ajouterActionEnFileDAttente(Action action) {}
+    private static void ajouterActionEnFileDAttente(Action action) {
+        fileAttenteExecution.add(action.cloner());
+    }
 
 }
