@@ -32,7 +32,9 @@ public class VGrille extends GridLayout {
 
     private List<VEntete> entetes;
 
-    private VCase[][] lesCases;
+//    private VCase[][] lesCases;
+
+    private Action action;
 
     public VGrille(Context context) {
         super(context);
@@ -62,7 +64,7 @@ public class VGrille extends GridLayout {
 
         this.initialiserColonnes(largeur);
         this.ajouterEnTetes(largeur);
-        this.initialiserTableauDeCases(hauteur, largeur);
+//        this.initialiserTableauDeCases(hauteur, largeur);
         this.ajouterCases(hauteur, largeur);
 
     }
@@ -71,9 +73,9 @@ public class VGrille extends GridLayout {
         this.colonnesDeCases = new ArrayList<>();
     }
 
-    private void initialiserTableauDeCases(int hauteur, int largeur) {
-        this.lesCases = new VCase[hauteur][largeur];
-    }
+//    private void initialiserTableauDeCases(int hauteur, int largeur) {
+//        this.lesCases = new VCase[hauteur][largeur];
+//    }
 
     private void ajouterEnTetes(int largeur) {
         this.entetes = new ArrayList<>();
@@ -130,10 +132,9 @@ public class VGrille extends GridLayout {
         return params;
     }
 
-    //FIXME: used to be : private void demanderActionEntete() {
-    private Action demanderActionEntete() {
+    private void demanderActionEntete() {
 
-        return ControleurAction.demanderAction(GCommande.JOUER_COUP_ICI);
+        action =  ControleurAction.demanderAction(GCommande.JOUER_COUP_ICI);
 
     }
 
@@ -142,7 +143,7 @@ public class VGrille extends GridLayout {
         entete.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Action action = demanderActionEntete();
+                demanderActionEntete();
 
                 action.setArguments(colonne);
 

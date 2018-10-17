@@ -88,9 +88,4 @@ public class ControleurObservation {
         }
     }
 
-    /*
-     * sera appelé par le ControleurAction après une action!
-     *
-     */
-
 }

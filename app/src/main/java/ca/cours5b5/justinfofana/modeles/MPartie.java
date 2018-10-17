@@ -61,7 +61,16 @@ public class MPartie extends Modele implements Fournisseur {
         ControleurAction.fournirAction(this, GCommande.JOUER_COUP_ICI, new ListenerFournisseur() {
             @Override
             public void executer(Object... args) {
-                jouerCoup((int) args[0]);
+                if (peutExecute(args)) {
+                    jouerCoup((int) args[0]);
+                }
+            }
+
+            private boolean peutExecute(Object... args) {
+
+                int nombreJetons = getGrille().getColonnes().get((int) args[0]).getJetons().size();
+
+                return nombreJetons < parametres.getHauteur();
             }
         });
     }

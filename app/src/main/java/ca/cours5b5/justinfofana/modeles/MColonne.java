@@ -19,7 +19,6 @@ public class MColonne extends Modele {
     }
 
     public void placerJeton(GCouleur couleur) {
-        //TODO: there is no check to see if there is space to put down a token
         jetons.add(couleur);
     }
 

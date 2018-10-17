@@ -32,9 +32,7 @@ public class ControleurAction {
     }
 
     public static void fournirAction(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur) {
-        Action action = actions.get(commande);
-        action.fournisseur = fournisseur;
-        action.listenerFournisseur = listenerFournisseur;
+        enregistrerFournisseur(fournisseur, commande, listenerFournisseur);
 
         executerActionsExecutables();
     }
@@ -61,8 +59,7 @@ public class ControleurAction {
 
     private static void lancerObservationSiApplicable(Action action) {
         if (action.fournisseur instanceof Modele) {
-
-            //FIXME: maybe i went wrong with my names somewhere
+//            FIXME: maybe i went wrong with my names somewhere
 //            ControleurObservation.lancerObservation((Modele) action.fournisseur);
             ControleurObservation.reagirObservation((Modele) action.fournisseur);
         }

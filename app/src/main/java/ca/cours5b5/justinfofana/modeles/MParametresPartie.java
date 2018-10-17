@@ -68,7 +68,6 @@ public class MParametresPartie extends Modele {
         this.pourGagner = pourGagner;
     }
 
-    // FIXME: these are the same exact methods from MParametre. seems bad
     @Override
     public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation
     {
