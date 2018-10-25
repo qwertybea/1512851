@@ -8,6 +8,8 @@ public class GConstantes {
 
     static { Log.d("Atelier04", Vue.class.getSimpleName() + "::static"); }
 
+    public static final String EXTENSION_PAR_DEFAUT = ".json";
+
     public static final int HAUTEUR_MAX = 10;
     public static final int HAUTEUR_MIN = 4;
     public static final int HAUTEUR_DEFAUT = 6;

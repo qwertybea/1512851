@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class Jsonification {
 
+    private Jsonification(){}
+
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();;
 
     public static Map<String, Object> enObjetJson(String json) {

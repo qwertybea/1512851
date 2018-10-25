@@ -9,10 +9,19 @@ import android.view.View;
 import android.widget.Button;
 
 import ca.cours5b5.justinfofana.R;
+import ca.cours5b5.justinfofana.controleurs.Action;
+import ca.cours5b5.justinfofana.controleurs.ControleurAction;
+import ca.cours5b5.justinfofana.global.GCommande;
 
 public class VMenuPrincipal extends Vue {
 
     static { Log.d("Atelier04", Vue.class.getSimpleName() + "::static"); }
+
+    private Button boutonParametres;
+    private Action actionParametres;
+
+    private Button boutonPartie;
+    private Action actionPartie;
 
     public VMenuPrincipal(Context context) {
         super(context);
@@ -27,8 +36,61 @@ public class VMenuPrincipal extends Vue {
     }
 
     @Override
-    protected void onFinishInflate() {
+    protected void onFinishInflate(){
         super.onFinishInflate();
-        //DebugTools.messageLog(this,"onFinishInflate");
+
+        recupererControles();
+
+        demanderActions();
+
+        installerListeners();
+
+    }
+
+    private void recupererControles() {
+
+        boutonParametres = findViewById(R.id.button_partie);
+
+        boutonPartie = findViewById(R.id.button_parametres);
+
+    }
+
+    private void demanderActions() {
+
+        actionParametres = ControleurAction.demanderAction(GCommande.OUVRIR_MENU_PARAMETRES);
+
+        actionPartie = ControleurAction.demanderAction(GCommande.DEMARRER_PARTIE);
+
+    }
+
+
+    private void installerListeners() {
+
+        installerListenerParametres();
+
+        installerListenerPartie();
+
+    }
+
+    private void installerListenerPartie() {
+
+        boutonPartie.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionPartie.executerDesQuePossible();
+            }
+        });
+
+    }
+
+    private void installerListenerParametres() {
+
+        boutonParametres.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionParametres.executerDesQuePossible();
+            }
+        });
+
     }
 }
