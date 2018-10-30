@@ -12,6 +12,7 @@ import ca.cours5b5.justinfofana.controleurs.ControleurAction;
 import ca.cours5b5.justinfofana.controleurs.ControleurObservation;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
+import ca.cours5b5.justinfofana.exceptions.ErreurAction;
 import ca.cours5b5.justinfofana.exceptions.ErreurSerialisation;
 import ca.cours5b5.justinfofana.global.DebugTools;
 import ca.cours5b5.justinfofana.global.GCommande;
@@ -23,130 +24,178 @@ public class MPartie extends Modele implements Fournisseur {
     @AttributSerialisable
     public MParametresPartie parametres;
     private final String __parametres = "parametres";
+
     @AttributSerialisable
-    public List<Integer> coups;
-    private final String __coups = "coups";
+    public List<Integer> listeCoups;
+    private final String __listeCoups = "listeCoups";
+
     private MGrille grille;
     private GCouleur couleurCourante;
 
-    public MPartie(MParametresPartie parametres) {
-        this.parametres = parametres;
-        this.coups = new ArrayList<>();
+    public MPartie(MParametresPartie parametres){
 
-        this.grille = new MGrille(parametres.getLargeur());
+        this.parametres = parametres;
+
+        initialiser();
+
+        initialiserCouleurCourante();
+
+        initialiserGrille();
 
         fournirActionPlacerJeton();
-        initialiserCouleurCourante();
+
     }
 
-    public MParametresPartie getParametres() {
-        return this.parametres;
+    private void initialiser() {
+        listeCoups = new ArrayList<>();
     }
-
-    public MGrille getGrille() { return this.grille; }
 
     private void initialiserCouleurCourante() {
-        couleurCourante = GCouleur.JAUNE;
+        couleurCourante = GCouleur.ROUGE;
     }
 
-    private void prochaineCouleurCourante() {
-        if (couleurCourante == GCouleur.ROUGE) {
-            couleurCourante = GCouleur.JAUNE;
-        } else if (couleurCourante == GCouleur.JAUNE) {
-            couleurCourante = GCouleur.ROUGE;
-        }
+
+    private void initialiserGrille() {
+        grille = new MGrille(parametres.getLargeur());
     }
+
 
     private void fournirActionPlacerJeton() {
-        ControleurAction.fournirAction(this, GCommande.JOUER_COUP_ICI, new ListenerFournisseur() {
-            @Override
-            public void executer(Object... args) {
-                if (peutExecute(args)) {
-                    jouerCoup((int) args[0]);
-                }
-            }
 
-            private boolean peutExecute(Object... args) {
+        ControleurAction.fournirAction(this,
+                GCommande.JOUER_COUP_ICI,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+                        try{
 
-                int nombreJetons = getGrille().getColonnes().get((int) args[0]).getJetons().size();
+                            int colonne = (Integer) args[0];
 
-                return nombreJetons < parametres.getHauteur();
-            }
-        });
+                            jouerCoup(colonne);
+
+
+                        }catch(ClassCastException e){
+
+                            throw new ErreurAction(e);
+
+                        }
+                    }
+                });
     }
 
     protected void jouerCoup(int colonne) {
-        this.coups.add(colonne);
-        this.grille.placerJeton(colonne, couleurCourante);
-        prochaineCouleurCourante();
+
+        if(siCoupLegal(colonne)){
+
+            listeCoups.add(colonne);
+
+            grille.placerJeton(colonne, couleurCourante);
+
+            prochaineCouleurCourante();
+
+        }
     }
 
+    private boolean siCoupLegal(int colonne){
+
+        MColonne mColonne = grille.getColonnes().get(colonne);
+
+        return mColonne.nombreDeJetons() < parametres.getHauteur();
+
+    }
+
+    private void prochaineCouleurCourante(){
+
+        switch(couleurCourante){
+
+            case ROUGE:
+                couleurCourante = GCouleur.JAUNE;
+                break;
+
+            case JAUNE:
+                couleurCourante = GCouleur.ROUGE;
+        }
+    }
+
+
+    public MGrille getGrille() {
+        return grille;
+    }
+
+    public MParametresPartie getParametres() {
+        return parametres;
+    }
+
+
     @Override
-    public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation {
+    public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation  {
 
-        List<String> coupsJson = new ArrayList<>();
+        parametres.aPartirObjetJson((Map<String, Object>)objetJson.get(__parametres));
 
-        for(Map.Entry<String, Object> entry : objetJson.entrySet()) {
+        initialiserCouleurCourante();
 
-            if (entry.getKey().equals(__parametres)) {
+        initialiserGrille();
 
-                this.parametres.aPartirObjetJson((Map<String, Object>) entry.getValue());
+        List<String> listeCoupsObjetJson = (List<String>) objetJson.get(__listeCoups);
 
-            } else if(entry.getKey().equals(__coups)) {
+        if(listeCoupsObjetJson != null){
 
-                coupsJson = (List<String>) entry.getValue();
+            List<Integer> coupsARejouer = listeCoupsAPartirJson(listeCoupsObjetJson);
+            rejouerLesCoups(coupsARejouer);
 
-            }
+        }
+    }
+
+
+    private List<Integer> listeCoupsAPartirJson(List<String> listeCoupsObjetJson) {
+
+        List<Integer> listeCoups = new ArrayList<>();
+
+        for(String coupChaine : listeCoupsObjetJson){
+
+            listeCoups.add(Integer.valueOf(coupChaine));
 
         }
 
-        this.grille = new MGrille(parametres.getLargeur());
-
-        this.initialiserCouleurCourante();
-
-        rejouerLesCoups(listeCoupsAPartirJson(coupsJson));
+        return listeCoups;
     }
 
+
+    private void rejouerLesCoups(List<Integer> coupsARejouer) {
+
+        listeCoups.clear();
+
+        for(Integer coup : coupsARejouer){
+
+            jouerCoup(coup);
+
+        }
+    }
 
     @Override
     public Map<String, Object> enObjetJson() throws ErreurSerialisation {
+        Map<String, Object> objetJson = new HashMap<>();
 
-        Map<String, Object> map = new HashMap<>();
+        objetJson.put(__parametres, parametres.enObjetJson());
+        objetJson.put(__listeCoups, listeCoupsEnObjetJson(listeCoups));
 
-        map.put(__parametres, parametres.enObjetJson());
-        map.put(__coups, listeCoupsEnObjetJson(coups));
+        return objetJson;
 
-        return map;
     }
 
-    private void rejouerLesCoups(List<Integer> coupsARejouer) {
-        coups.clear();
-        for (int coup : coupsARejouer) {
-            jouerCoup(coup);
+    private  List<String> listeCoupsEnObjetJson(List<Integer> listeCoups) {
+
+        List<String> listeCoupsObjetJson = new ArrayList<>();
+
+        for(Integer coup : listeCoups){
+
+            listeCoupsObjetJson.add(coup.toString());
+
         }
 
-        // TODO: on aimerait bien que quelqu'un affiche les jetons maintenat
+        return listeCoupsObjetJson;
+
     }
 
-    private List<Integer> listeCoupsAPartirJson(List<String> listeCoupsObjetJson) {
-        final List<Integer> listInt = new ArrayList<>();
-//        listeCoupsObjetJson.forEach((coup) -> listInt.add(Integer.parseInt(coup)));
-
-        for (String coup : listeCoupsObjetJson) {
-            listInt.add(Integer.parseInt(coup));
-        }
-
-        return listInt;
-    }
-
-    private List<String> listeCoupsEnObjetJson(List<Integer> listeCoups) {
-        final List<String> listJson = new ArrayList<>();
-
-        for (int coup : listeCoups) {
-            listJson.add(Integer.toString(coup));
-        }
-
-        return listJson;
-    }
 
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">JustinFofana</string>
+    <string name="app_name" translatable="false">JustinFofana</string>
     <string name="LANGUAGE">你好</string>
     <bool name="is_portrait">false</bool>
     <bool name="is_landscape">false</bool>
@@ -10,4 +10,14 @@
     <string name="T_POUR_GAGNER">Pour gagner</string>
     <string name="B_PARAMETRE">Paramètre</string>
     <string name="B_PARTIE">Jouer une partie</string>
+
+
+    <string name="joueur1">joueur1</string>
+    <string name="joueur2">joueur2</string>
+
+
+
+
+
+    <string name="entete" translatable="false">↓\n↓</string>
 </resources>

@@ -49,9 +49,9 @@ public class VMenuPrincipal extends Vue {
 
     private void recupererControles() {
 
-        boutonParametres = findViewById(R.id.button_partie);
+        boutonParametres = findViewById(R.id.button_parametres);
 
-        boutonPartie = findViewById(R.id.button_parametres);
+        boutonPartie = findViewById(R.id.button_partie);
 
     }
 

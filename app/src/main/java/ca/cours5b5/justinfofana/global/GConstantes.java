@@ -8,19 +8,20 @@ public class GConstantes {
 
     static { Log.d("Atelier04", Vue.class.getSimpleName() + "::static"); }
 
-    public static final String EXTENSION_PAR_DEFAUT = ".json";
+    private GConstantes(){}
 
-    public static final int HAUTEUR_MAX = 10;
-    public static final int HAUTEUR_MIN = 4;
-    public static final int HAUTEUR_DEFAUT = 6;
-    public static final int LARGEUR_MAX = 10;
     public static final int LARGEUR_MIN = 4;
-    public static final int LARGEUR_DEFAUT = 7;
-    public static final int SCORE_GAGNANT_MAX = 4;
-    public static final int SCORE_GAGNANT_MIN = 3;
-    public static final int SCORE_GAGNANT_DEFAUT = 4;
+    public static final int LARGEUR_MAX = 10;
+    public static final int LARGEUR_PAR_DEFAUT = 7;
 
+    public static final int HAUTEUR_MIN = 4;
+    public static final int HAUTEUR_MAX = 10;
+    public static final int HAUTEUR_PAR_DEFAUT = 6;
 
+    public static final int POUR_GAGNER_MIN = 3;
+    public static final int POUR_GAGNER_PAR_DEFAUT = 4;
+
+    public static final String EXTENSION_PAR_DEFAUT=".json";
 
     public static final int GRILLE_MARGIN = 5;
 
