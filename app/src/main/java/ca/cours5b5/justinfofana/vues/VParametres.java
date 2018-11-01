@@ -19,6 +19,7 @@ import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.justinfofana.exceptions.ErreurObservation;
 import ca.cours5b5.justinfofana.global.GCommande;
 import ca.cours5b5.justinfofana.modeles.MParametres;
+import ca.cours5b5.justinfofana.modeles.MPartie;
 import ca.cours5b5.justinfofana.modeles.Modele;
 
 
@@ -27,10 +28,12 @@ public class VParametres extends Vue {
     private Spinner spinnerHauteur;
     private Spinner spinnerLargeur;
     private Spinner spinnerPourGagner;
+    private Button buttonEffacerPartie;
 
     private Action actionHauteur;
     private Action actionLargeur;
     private Action actionPourGagner;
+    private Action actionEffacerPartie;
 
     public VParametres(Context context) {
         super(context);
@@ -63,6 +66,7 @@ public class VParametres extends Vue {
         spinnerHauteur = findViewById(R.id.spinner_hauteur);
         spinnerLargeur = findViewById(R.id.spinner_largeur);
         spinnerPourGagner = findViewById(R.id.spinner_pourGagner);
+        buttonEffacerPartie = findViewById(R.id.button_effacerPartie);
 
         initialiserSpinner(spinnerHauteur);
         initialiserSpinner(spinnerLargeur);
@@ -75,6 +79,7 @@ public class VParametres extends Vue {
         actionHauteur = ControleurAction.demanderAction(GCommande.CHOISIR_HAUTEUR);
         actionLargeur = ControleurAction.demanderAction(GCommande.CHOISIR_LARGEUR);
         actionPourGagner = ControleurAction.demanderAction(GCommande.CHOISIR_POUR_GAGNER);
+        actionEffacerPartie = ControleurAction.demanderAction(GCommande.EFFACER_MODELE);
 
     }
 
@@ -91,6 +96,7 @@ public class VParametres extends Vue {
         installerListenerHauteur();
         installerListenerLargeur();
         installerListenerPourGagner();
+        installerListenerEffacerPartie();
 
     }
 
@@ -148,6 +154,20 @@ public class VParametres extends Vue {
 
             }
         });
+    }
+
+    private void installerListenerEffacerPartie() {
+
+        buttonEffacerPartie.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                actionEffacerPartie.setArguments(MPartie.class.getSimpleName());
+                actionEffacerPartie.executerDesQuePossible();
+
+            }
+        });
+
     }
 
     private void installerObservateur() {

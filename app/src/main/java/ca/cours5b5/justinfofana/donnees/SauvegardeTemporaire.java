@@ -45,4 +45,15 @@ public class SauvegardeTemporaire implements SourceDeDonnees {
         }
     }
 
+    @Override
+    public void effacerModele(String cheminSauvegarde) {
+
+        if(bundle != null){
+
+            bundle.remove(cheminSauvegarde);
+
+        }
+
+    }
+
 }

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import ca.cours5b5.justinfofana.controleurs.ControleurAction;
+import ca.cours5b5.justinfofana.controleurs.ControleurModeles;
+import ca.cours5b5.justinfofana.controleurs.ControleurObservation;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.justinfofana.exceptions.ErreurAction;
@@ -57,6 +59,7 @@ public class MParametres extends Modele implements Fournisseur {
         fournirActionHauteur();
         fournirActionLargeur();
         fournirActionPourGagner();
+        fournirActionEffacerPartie();
 
     }
 
@@ -117,6 +120,28 @@ public class MParametres extends Modele implements Fournisseur {
                         try {
 
                             getParametresPartie().setPourGagner((Integer) args[0]);
+
+                        } catch (ClassCastException
+                                | IndexOutOfBoundsException e) {
+
+                            throw new ErreurAction(e);
+
+                        }
+                    }
+                });
+    }
+
+    private void fournirActionEffacerPartie() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.EFFACER_MODELE,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        try {
+
+                            ControleurModeles.effacerModele((String) args[0]);
 
                         } catch (ClassCastException
                                 | IndexOutOfBoundsException e) {

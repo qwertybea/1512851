@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Map;
 
+import ca.cours5b5.justinfofana.exceptions.ErreurModele;
 import ca.cours5b5.justinfofana.global.GConstantes;
 import ca.cours5b5.justinfofana.serialisation.Jsonification;
 
@@ -88,6 +89,21 @@ public class Disque implements SourceDeDonnees {
      * le modèle
      *
      */
+
+    @Override
+    public void effacerModele(String cheminSauvegarde) {
+
+        File fichier = getFichier(cheminSauvegarde);
+
+        try {
+
+            fichier.delete();
+
+        } catch (Exception e) {
+            throw new ErreurModele(e);
+        }
+
+    }
 
     private File getFichier(String cheminSauvegarde) {
 

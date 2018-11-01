@@ -1,5 +1,7 @@
 package ca.cours5b5.justinfofana.controleurs;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.Map;
 import ca.cours5b5.justinfofana.donnees.Disque;
 import ca.cours5b5.justinfofana.donnees.SourceDeDonnees;
 import ca.cours5b5.justinfofana.exceptions.ErreurModele;
+import ca.cours5b5.justinfofana.global.DebugTools;
 import ca.cours5b5.justinfofana.modeles.MParametres;
 import ca.cours5b5.justinfofana.modeles.MParametresPartie;
 import ca.cours5b5.justinfofana.modeles.MPartie;
@@ -111,6 +114,25 @@ public class ControleurModeles {
             sauvegarderModeleDansCetteSource(nomModele, source);
 
         }
+    }
+
+    public static void effacerModele(String nomModele){
+
+        modelesEnMemoire.remove(nomModele);
+
+        for(SourceDeDonnees source : listeDeSauvegardes){
+
+            effacerModeleDansCetteSource(nomModele, source);
+
+        }
+
+    }
+
+
+    public static void effacerModeleDansCetteSource(String nomModele, SourceDeDonnees sourceDeDonnees) {
+
+        sourceDeDonnees.effacerModele(nomModele);
+
     }
 
 }
