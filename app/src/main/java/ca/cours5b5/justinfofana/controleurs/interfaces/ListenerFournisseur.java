@@ -1,5 +1,8 @@
 package ca.cours5b5.justinfofana.controleurs.interfaces;
 
-public interface ListenerFournisseur {
-    void executer(Object... args);
+public abstract class ListenerFournisseur {
+    public abstract void executer(Object... args);
+    public boolean peutExecuter(Object... args) {
+        return true;
+    }
 }

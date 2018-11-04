@@ -80,6 +80,17 @@ public class MPartie extends Modele implements Fournisseur {
 
                         }
                     }
+
+                    @Override
+                    public boolean peutExecuter(Object... args) {
+
+                        return siCoupLegal((int) args[0]);
+
+                    }
+
+                    public boolean dernierCoup(int colonne) {
+                        return siCoupLegal(colonne + 1);
+                    }
                 });
     }
 

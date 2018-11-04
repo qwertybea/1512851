@@ -139,7 +139,21 @@ public class VGrille extends GridLayout {
             public void onClick(View v) {
 
                 actionEntete.setArguments(entete.getColonne());
-                actionEntete.executerDesQuePossible();
+
+                if (actionEntete.peutExecuter()) {
+
+                    actionEntete.executerDesQuePossible();
+
+                }
+
+                if (!actionEntete.peutExecuter()) {
+
+                    entete.setEnabled(false);
+
+                    // FIXME: may not be needed
+                    // set args to null just for safety i guess
+                    actionEntete.setArguments(null);
+                }
 
             }
         });
