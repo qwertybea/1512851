@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            keyAlias 'key0'
+            keyPassword 'patate'
+            storeFile file('C:/Users/Justin/AndroidStudioProjects/1512851/debug.jks')
+            storePassword 'patate'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "ca.cours5b5.justinfofana"
@@ -15,19 +23,24 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.debug
+        }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
     // mine
-
     implementation 'com.google.code.gson:gson:2.8.4'
     implementation 'com.android.support:gridlayout-v7:26.0.2'
+    implementation 'com.firebaseui:firebase-ui-database:3.3.1'
+    implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
 }
+
+apply plugin: 'com.google.gms.google-services'

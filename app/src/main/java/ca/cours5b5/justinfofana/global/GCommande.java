@@ -8,6 +8,7 @@ public enum GCommande {
 
     DEMARRER_PARTIE,
     OUVRIR_MENU_PARAMETRES,
+    CONNEXION,
 
     JOUER_COUP_ICI
 }

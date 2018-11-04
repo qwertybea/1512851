@@ -14,7 +14,7 @@ import ca.cours5b5.justinfofana.exceptions.ErreurModele;
 import ca.cours5b5.justinfofana.global.GConstantes;
 import ca.cours5b5.justinfofana.serialisation.Jsonification;
 
-public class Disque implements SourceDeDonnees {
+public class Disque extends SourceDeDonnees {
 
     private static final Disque instance = new Disque();
 
@@ -107,11 +107,19 @@ public class Disque implements SourceDeDonnees {
 
     private File getFichier(String cheminSauvegarde) {
 
-        String nomFichier = getNomFichier(cheminSauvegarde);
+        String nomModele = getNomModele(cheminSauvegarde);
+
+        String nomFichier = getNomFichier(nomModele);
 
         return new File(repertoireRacine, nomFichier);
 
     }
+    /*
+     * Obtenir le nomModele et l'utiliser pour le nom du fichier
+     *
+     * p.ex. MParametres/T1m8GxiBAlhLUcF6Ne0GV06nnEg1 => MParametres.json
+     *
+     */
 
     private String getNomFichier(String nomModele) {
         return nomModele + GConstantes.EXTENSION_PAR_DEFAUT;

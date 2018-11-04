@@ -2,19 +2,23 @@ package ca.cours5b5.justinfofana.controleurs;
 
 import android.util.Log;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import ca.cours5b5.justinfofana.donnees.Disque;
+import ca.cours5b5.justinfofana.donnees.Serveur;
 import ca.cours5b5.justinfofana.donnees.SourceDeDonnees;
 import ca.cours5b5.justinfofana.exceptions.ErreurModele;
 import ca.cours5b5.justinfofana.global.DebugTools;
+import ca.cours5b5.justinfofana.global.GLog;
 import ca.cours5b5.justinfofana.modeles.MParametres;
 import ca.cours5b5.justinfofana.modeles.MParametresPartie;
 import ca.cours5b5.justinfofana.modeles.MPartie;
 import ca.cours5b5.justinfofana.modeles.Modele;
+import ca.cours5b5.justinfofana.usagers.UsagerCourant;
 
 public class ControleurModeles {
 
@@ -31,6 +35,7 @@ public class ControleurModeles {
         listeDeSauvegardes = new ArrayList<>();
 
         listeDeSauvegardes.add(Disque.getInstance());
+        listeDeSauvegardes.add(Serveur.getInstance());
 
     }
 
@@ -48,7 +53,7 @@ public class ControleurModeles {
 
             Map<String, Object> objetJson = modele.enObjetJson();
 
-            sourceDeDonnees.sauvegarderModele(nomModele, objetJson);
+            sourceDeDonnees.sauvegarderModele(getCheminSauvegarde(nomModele), objetJson);
 
         }
 
@@ -75,10 +80,11 @@ public class ControleurModeles {
 
         for(SourceDeDonnees sourceDeDonnees : sequenceDeChargement){
 
-            Map<String, Object> objetJson = sourceDeDonnees.chargerModele(nomModele);
+            Map<String, Object> objetJson = sourceDeDonnees.chargerModele(getCheminSauvegarde(nomModele));
 
             if(objetJson != null){
 
+                GLog.activite(nomModele, sourceDeDonnees, objetJson);
                 modele.aPartirObjetJson(objetJson);
                 break;
 
@@ -131,8 +137,35 @@ public class ControleurModeles {
 
     public static void effacerModeleDansCetteSource(String nomModele, SourceDeDonnees sourceDeDonnees) {
 
-        sourceDeDonnees.effacerModele(nomModele);
+        sourceDeDonnees.effacerModele(getCheminSauvegarde(nomModele));
 
     }
+
+    private static String getCheminSauvegarde(String nomModele) {
+
+        return nomModele + File.separator + UsagerCourant.getId();
+
+//        String cheminSauvegarde = nomModele;
+//
+//        if (Serveur.class.getSimpleName().equals(nomModele)) {
+//
+//            if (UsagerCourant.siUsagerConnecte()) {
+//                cheminSauvegarde += File.separator + UsagerCourant.getId();
+//            }
+//
+//        }
+//
+//        return cheminSauvegarde;
+    }
+    /*
+     * Le chemin est de la forme:
+     *
+     * nomModele/idUsager
+     *
+     * Par exemple:
+     *
+     * MPartie/T1m8GxiBAlhLUcF6Ne0GV06nnEg1
+     *
+     */
 
 }

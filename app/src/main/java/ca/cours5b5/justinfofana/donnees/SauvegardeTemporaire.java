@@ -6,7 +6,7 @@ import java.util.Map;
 
 import ca.cours5b5.justinfofana.serialisation.Jsonification;
 
-public class SauvegardeTemporaire implements SourceDeDonnees {
+public class SauvegardeTemporaire extends SourceDeDonnees {
 
     private Bundle bundle;
 
@@ -16,9 +16,9 @@ public class SauvegardeTemporaire implements SourceDeDonnees {
 
     @Override
     public Map<String, Object> chargerModele(String cheminSauvegarde) {
-        if(bundle != null && bundle.containsKey(cheminSauvegarde)){
+        if(bundle != null && bundle.containsKey(getCle(cheminSauvegarde))){
 
-            String json = bundle.getString(cheminSauvegarde);
+            String json = bundle.getString(getCle(cheminSauvegarde));
 
             Map<String, Object> objetJson = Jsonification.enObjetJson(json);
 
@@ -40,7 +40,7 @@ public class SauvegardeTemporaire implements SourceDeDonnees {
         if(bundle != null){
 
             String json = Jsonification.enChaine(objetJson);
-            bundle.putString(cheminSauvegarde, json);
+            bundle.putString(getCle(cheminSauvegarde), json);
 
         }
     }
@@ -50,10 +50,20 @@ public class SauvegardeTemporaire implements SourceDeDonnees {
 
         if(bundle != null){
 
-            bundle.remove(cheminSauvegarde);
+            bundle.remove(getCle(cheminSauvegarde));
 
         }
 
     }
+
+    private String getCle(String cheminSauvegarde){
+        return getNomModele(cheminSauvegarde);
+    }
+    /*
+     * Utiliser le nomModele comme clé de sauvegarde
+     *
+     * P.ex: MPartie/T1m8GxiBAlhLUcF6Ne0GV06nnEg1 => MPartie
+     *
+     */
 
 }
