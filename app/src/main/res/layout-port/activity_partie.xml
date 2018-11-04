@@ -22,7 +22,7 @@
 
     </ca.cours5b5.justinfofana.vues.VGrille>
 
-    <TextView
+    <ca.cours5b5.justinfofana.vues.VJoueur
         android:id="@+id/texte_joueur_un"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="@+id/GridLayout_partie"
         app:layout_constraintTop_toBottomOf="@+id/GridLayout_partie" />
 
-    <TextView
+    <ca.cours5b5.justinfofana.vues.VJoueur
         android:id="@+id/texte_joueur_deux"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

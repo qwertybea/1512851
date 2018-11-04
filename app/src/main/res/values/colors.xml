@@ -6,6 +6,8 @@
 
     <color name="ROUGE">#ff0000 </color>
     <color name="JAUNE">#ffff5a</color>
+    <color name="ERREUR">#9c5aff</color>
+    <color name="TRANSPARANT">#00000000</color>
     <color name="VIDE">#64d8e0e4</color>
 
 

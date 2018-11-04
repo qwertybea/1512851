@@ -55,6 +55,11 @@ public class VCase extends AppCompatButton {
 
                 changerCouleurDeFond(R.color.JAUNE);
                 break;
+
+            default:
+
+                changerCouleurDeFond(R.color.ERREUR);
+                break;
         }
     }
 

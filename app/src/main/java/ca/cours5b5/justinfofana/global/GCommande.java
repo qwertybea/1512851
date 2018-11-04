@@ -10,5 +10,6 @@ public enum GCommande {
     OUVRIR_MENU_PARAMETRES,
     CONNEXION,
 
-    JOUER_COUP_ICI
+    JOUER_COUP_ICI,
+    COULEUR_JOUEUR
 }

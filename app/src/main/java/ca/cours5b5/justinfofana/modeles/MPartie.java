@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.cours5b5.justinfofana.controleurs.Action;
 import ca.cours5b5.justinfofana.controleurs.ControleurAction;
 import ca.cours5b5.justinfofana.controleurs.ControleurObservation;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
@@ -31,12 +32,18 @@ public class MPartie extends Modele implements Fournisseur {
 
     private MGrille grille;
     private GCouleur couleurCourante;
+    private int joueurCourant;
+    private int nombreJoueur;
+
+    private Action actionCouleurJoueur;
 
     public MPartie(MParametresPartie parametres){
 
         this.parametres = parametres;
 
         initialiser();
+
+        initialiserJoueurs();
 
         initialiserCouleurCourante();
 
@@ -47,11 +54,37 @@ public class MPartie extends Modele implements Fournisseur {
     }
 
     private void initialiser() {
+
         listeCoups = new ArrayList<>();
+
+    }
+
+    private void initialiserJoueurs() {
+
+        demanderActionCouleurJoueur();
+
+        nombreJoueur = 2;
+
+        joueurCourant = 0;
+
+    }
+
+    private void demanderActionCouleurJoueur() {
+
+        actionCouleurJoueur = ControleurAction.demanderAction(GCommande.COULEUR_JOUEUR);
+
+    }
+
+    private void appelerActionCouleurJoueur() {
+
+        actionCouleurJoueur.setArguments(joueurCourant, couleurCourante);
+
+        actionCouleurJoueur.executerDesQuePossible();
+
     }
 
     private void initialiserCouleurCourante() {
-        couleurCourante = GCouleur.ROUGE;
+        prochaineCouleurCourante();
     }
 
 
@@ -102,6 +135,7 @@ public class MPartie extends Modele implements Fournisseur {
 
             grille.placerJeton(colonne, couleurCourante);
 
+            prochainJoueurCourant();
             prochaineCouleurCourante();
 
         }
@@ -115,17 +149,19 @@ public class MPartie extends Modele implements Fournisseur {
 
     }
 
+    private void prochainJoueurCourant(){
+        joueurCourant++;
+        if (joueurCourant == nombreJoueur) {
+            joueurCourant = 0;
+        }
+    }
+
     private void prochaineCouleurCourante(){
 
-        switch(couleurCourante){
+        couleurCourante = GCouleur.values()[joueurCourant];
 
-            case ROUGE:
-                couleurCourante = GCouleur.JAUNE;
-                break;
+        appelerActionCouleurJoueur();
 
-            case JAUNE:
-                couleurCourante = GCouleur.ROUGE;
-        }
     }
 
 
@@ -137,6 +173,13 @@ public class MPartie extends Modele implements Fournisseur {
         return parametres;
     }
 
+    public GCouleur getCouleurCourante() {
+        return couleurCourante;
+    }
+
+    public int getJoueurCourant() {
+        return joueurCourant;
+    }
 
     @Override
     public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation  {

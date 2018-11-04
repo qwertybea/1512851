@@ -8,6 +8,7 @@ import java.util.Map;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.justinfofana.global.GCommande;
+import ca.cours5b5.justinfofana.global.GLog;
 import ca.cours5b5.justinfofana.modeles.Modele;
 
 public class ControleurAction {
@@ -107,7 +108,8 @@ public class ControleurAction {
         Action clone = action.cloner();
 
         fileAttenteExecution.add(clone);
-
+        GLog.activite(0, fileAttenteExecution.get(0).fournisseur, fileAttenteExecution.get(0).listenerFournisseur);
+        GLog.activite(fileAttenteExecution.size(), clone.fournisseur, clone.listenerFournisseur);
     }
 
     public static void oublierFournisseur(Fournisseur fournisseur) {

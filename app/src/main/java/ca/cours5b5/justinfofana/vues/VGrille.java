@@ -1,6 +1,7 @@
 package ca.cours5b5.justinfofana.vues;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -11,12 +12,17 @@ import android.widget.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.cours5b5.justinfofana.R;
 import ca.cours5b5.justinfofana.controleurs.Action;
 import ca.cours5b5.justinfofana.controleurs.ControleurAction;
+import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
+import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
+import ca.cours5b5.justinfofana.exceptions.ErreurAction;
 import ca.cours5b5.justinfofana.global.DebugTools;
 import ca.cours5b5.justinfofana.global.GCommande;
 import ca.cours5b5.justinfofana.global.GConstantes;
 import ca.cours5b5.justinfofana.global.GCouleur;
+import ca.cours5b5.justinfofana.global.GLog;
 import ca.cours5b5.justinfofana.modeles.MColonne;
 import ca.cours5b5.justinfofana.modeles.MGrille;
 import ca.cours5b5.justinfofana.modeles.MParametres;
@@ -55,7 +61,6 @@ public class VGrille extends GridLayout {
 
         demanderActionEntete();
 
-
     }
 
     private void demanderActionEntete() {
@@ -71,7 +76,6 @@ public class VGrille extends GridLayout {
         entetes = new ArrayList<>();
 
     }
-
 
     void creerGrille(int hauteur, int largeur) {
 
@@ -146,6 +150,7 @@ public class VGrille extends GridLayout {
 
                 }
 
+                // on veut savoir si on peut effectuer l'action une nouvele fois il faut donc demander apres que l'action est ete executer
                 if (!actionEntete.peutExecuter()) {
 
                     entete.setEnabled(false);
