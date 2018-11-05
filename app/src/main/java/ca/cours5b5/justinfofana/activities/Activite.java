@@ -73,6 +73,8 @@ public abstract class Activite extends AppCompatActivity {
 
         DebugTools.messageLog(this, "onSaveInstanceState");
 
+
+        // FIXME: should this be here?
         ControleurModeles.sauvegarderModeleDansCetteSource(MParametres.class.getSimpleName(),
                 new SauvegardeTemporaire(outState));
     }

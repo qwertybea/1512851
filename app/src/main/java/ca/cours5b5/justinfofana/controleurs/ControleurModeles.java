@@ -59,6 +59,8 @@ public class ControleurModeles {
 
             Map<String, Object> objetJson = modele.enObjetJson();
 
+            GLog.donnees(sourceDeDonnees, modele, getCheminSauvegarde(nomModele), Jsonification.enChaine(objetJson));
+
             sourceDeDonnees.sauvegarderModele(getCheminSauvegarde(nomModele), objetJson);
 
         }
@@ -187,6 +189,9 @@ public class ControleurModeles {
             ListenerGetModele listenerGetModele) {
 
         GLog.donnees(nomModele);
+
+        // FIXME: should not be done here
+        modelesEnMemoire.put(nomModele, modele);
 
         chargementViaSequence(modele, getCheminSauvegarde(nomModele), listenerGetModele, 0);
 

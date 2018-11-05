@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import ca.cours5b5.justinfofana.exceptions.ErreurSerialisation;
 import ca.cours5b5.justinfofana.global.DebugTools;
 import ca.cours5b5.justinfofana.global.GCommande;
 import ca.cours5b5.justinfofana.global.GCouleur;
+import ca.cours5b5.justinfofana.global.GLog;
 import ca.cours5b5.justinfofana.serialisation.AttributSerialisable;
 
 public class MPartie extends Modele implements Fournisseur {
@@ -205,9 +207,22 @@ public class MPartie extends Modele implements Fournisseur {
 
         List<Integer> listeCoups = new ArrayList<>();
 
+        Iterator iter = listeCoupsObjetJson.iterator();
+
+        while(iter.hasNext()) {
+            GLog.donnees(iter.next());
+        }
+
         for(String coupChaine : listeCoupsObjetJson){
 
-            listeCoups.add(Integer.valueOf(coupChaine));
+            GLog.donnees(coupChaine);
+
+            // le coup peut etre null si la liste stocker n'est pas conforme (eg. [0: 1, 2: 1, 3: 1])
+            // lorsque caster en liste ceci retournera une liste de longueur 4
+            // et il remplira les element manquant avec une valeurs null (eg. [0: 1, 1: null, 2: 1, 3: 1])
+            if (coupChaine != null) {
+                listeCoups.add(Integer.valueOf(coupChaine));
+            }
 
         }
 
