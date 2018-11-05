@@ -9,9 +9,16 @@ import android.view.View;
 import android.widget.Button;
 
 import ca.cours5b5.justinfofana.R;
+import ca.cours5b5.justinfofana.activities.AMenuPrincipal;
 import ca.cours5b5.justinfofana.controleurs.Action;
 import ca.cours5b5.justinfofana.controleurs.ControleurAction;
+import ca.cours5b5.justinfofana.controleurs.ControleurObservation;
+import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerObservateur;
+import ca.cours5b5.justinfofana.exceptions.ErreurObservation;
 import ca.cours5b5.justinfofana.global.GCommande;
+import ca.cours5b5.justinfofana.modeles.MParametres;
+import ca.cours5b5.justinfofana.modeles.Modele;
+import ca.cours5b5.justinfofana.usagers.UsagerCourant;
 
 public class VMenuPrincipal extends Vue {
 
@@ -25,6 +32,7 @@ public class VMenuPrincipal extends Vue {
 
     private Button boutonConnexion;
     private Action actionConnexion;
+    private Action actionDeconnexion;
 
     public VMenuPrincipal(Context context) {
         super(context);
@@ -48,6 +56,8 @@ public class VMenuPrincipal extends Vue {
 
         installerListeners();
 
+        initialiserConnexionInputs();
+
     }
 
     private void recupererControles() {
@@ -67,6 +77,8 @@ public class VMenuPrincipal extends Vue {
         actionPartie = ControleurAction.demanderAction(GCommande.DEMARRER_PARTIE);
 
         actionConnexion = ControleurAction.demanderAction(GCommande.CONNEXION);
+
+        actionDeconnexion = ControleurAction.demanderAction(GCommande.DECONNEXION);
 
     }
 
@@ -111,6 +123,31 @@ public class VMenuPrincipal extends Vue {
                 actionConnexion.executerDesQuePossible();
             }
         });
+
+    }
+
+    private void installerListenerDeconnexion() {
+
+        boutonConnexion.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionDeconnexion.executerDesQuePossible();
+            }
+        });
+
+    }
+
+    public void initialiserConnexionInputs() {
+
+        boutonConnexion.setOnClickListener(null);
+
+        if (UsagerCourant.siUsagerConnecte()) {
+            installerListenerDeconnexion();
+            boutonConnexion.setText(R.string.B_DECONNEXION);
+        } else {
+            installerListenerConnexion();
+            boutonConnexion.setText(R.string.B_CONNEXION);
+        }
 
     }
 }

@@ -11,23 +11,32 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import ca.cours5b5.justinfofana.R;
 import ca.cours5b5.justinfofana.controleurs.ControleurAction;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
+import ca.cours5b5.justinfofana.exceptions.ErreurSerialisation;
 import ca.cours5b5.justinfofana.global.GCommande;
 import ca.cours5b5.justinfofana.global.GConstantes;
 import ca.cours5b5.justinfofana.global.GLog;
+import ca.cours5b5.justinfofana.modeles.Modele;
+import ca.cours5b5.justinfofana.vues.VMenuPrincipal;
 
 public class AMenuPrincipal extends Activite implements Fournisseur {
 
     static { Log.d("Atelier04", Activite.class.getSimpleName() + "::static"); }
 
+    // FIXME: this is aweful
+    VMenuPrincipal vMenuPrincipal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menuprincipal);
+
+        vMenuPrincipal = findViewById(R.id.activity_menuPrincipal);
 
         fournirActions();
 
@@ -40,6 +49,8 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
         fournirActionDemarrerPartie();
 
         fournirActionConnexion();
+
+        fournirActionDeconnexion();
     }
 
     private void fournirActionOuvrirMenuParametres() {
@@ -84,6 +95,20 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
                 });
     }
 
+    private void fournirActionDeconnexion() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.DECONNEXION,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        deconnexion();
+
+                    }
+                });
+    }
+
     private void transitionParametres(){
 
         Intent intentionParametres = new Intent(this, AParametres.class);
@@ -122,7 +147,9 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     public void onComplete(@NonNull Task<Void> task) {
 
-                        GLog.activite("Déconnexion terminée");
+                    GLog.activite("Déconnexion terminée");
+
+                    vMenuPrincipal.initialiserConnexionInputs();
 
                     }
                 });
@@ -143,7 +170,18 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
                 GLog.activite("connexion échouée", resultCode);
 
             }
+
+            vMenuPrincipal.initialiserConnexionInputs();
         }
+    }
+
+    // maybe we want to check after resumes. beacause we might be able to connect somewhere else
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        vMenuPrincipal.initialiserConnexionInputs();
     }
 
 }
