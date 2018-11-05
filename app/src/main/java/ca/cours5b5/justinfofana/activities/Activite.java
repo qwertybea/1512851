@@ -8,6 +8,7 @@ import android.util.Log;
 import ca.cours5b5.justinfofana.controleurs.ControleurModeles;
 import ca.cours5b5.justinfofana.donnees.Disque;
 import ca.cours5b5.justinfofana.donnees.SauvegardeTemporaire;
+import ca.cours5b5.justinfofana.donnees.Serveur;
 import ca.cours5b5.justinfofana.global.DebugTools;
 import ca.cours5b5.justinfofana.modeles.MParametres;
 
@@ -19,6 +20,7 @@ public abstract class Activite extends AppCompatActivity {
 
         ControleurModeles.setSequenceDeChargement(
                 new SauvegardeTemporaire(savedInstanceState),
+                Serveur.getInstance(),
                 Disque.getInstance());
 
     }

@@ -3,6 +3,7 @@ package ca.cours5b5.justinfofana.controleurs;
 import java.util.HashMap;
 import java.util.Map;
 
+import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerGetModele;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.justinfofana.modeles.MParametres;
 import ca.cours5b5.justinfofana.modeles.MParametresPartie;
@@ -20,13 +21,33 @@ public class ControleurObservation {
     }
 
 
-    public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur) {
+    public static void observerModele(final String nomModele, final ListenerObservateur listenerObservateur) {
 
-        Modele modele = ControleurModeles.getModele(nomModele);
+        ControleurModeles.getModele(nomModele, new ListenerGetModele() {
+            @Override
+            public void reagirAuModele(Modele modele) {
 
-        observations.put(modele, listenerObservateur);
+                // TODO: not sure how we know wither to call 'changement' ou 'nouveau'
 
-        listenerObservateur.reagirNouveauModele(modele);
+                if (observations.get(modele) == null) {
+
+                    observations.put(modele, listenerObservateur);
+
+                    // FIXME: should not be callable from here
+                    // but then i dont know where we have to create the 'ListenerGetModele'
+                    // it must be in ControleurModele for it to call 'chargerDonnees()'
+                    ControleurModeles.chargerDonnees(modele, nomModele, this);
+
+                    listenerObservateur.reagirNouveauModele(modele);
+
+                } else {
+
+                    listenerObservateur.reagirChangementAuModele(modele);
+
+                }
+
+            }
+        });
 
     }
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import java.util.Map;
 
+import ca.cours5b5.justinfofana.exceptions.ErreurSerialisation;
 import ca.cours5b5.justinfofana.serialisation.Jsonification;
 
 public class SauvegardeTemporaire extends SourceDeDonnees {
@@ -15,18 +16,18 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
     }
 
     @Override
-    public Map<String, Object> chargerModele(String cheminSauvegarde) {
+    public void chargerModele(final String cheminSauvegarde, final ListenerChargement listenerChargement) {
         if(bundle != null && bundle.containsKey(getCle(cheminSauvegarde))){
 
             String json = bundle.getString(getCle(cheminSauvegarde));
 
             Map<String, Object> objetJson = Jsonification.enObjetJson(json);
 
-            return objetJson;
+            listenerChargement.reagirSucces(objetJson);
 
         }else{
 
-            return null;
+            listenerChargement.reagirErreur(new ErreurSerialisation("Erreur de chargement"));
 
         }
     }

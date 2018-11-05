@@ -108,8 +108,7 @@ public class ControleurAction {
         Action clone = action.cloner();
 
         fileAttenteExecution.add(clone);
-        GLog.activite(0, fileAttenteExecution.get(0).fournisseur, fileAttenteExecution.get(0).listenerFournisseur);
-        GLog.activite(fileAttenteExecution.size(), clone.fournisseur, clone.listenerFournisseur);
+
     }
 
     public static void oublierFournisseur(Fournisseur fournisseur) {
