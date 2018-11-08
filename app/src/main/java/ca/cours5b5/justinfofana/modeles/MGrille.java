@@ -11,11 +11,15 @@ public class MGrille extends Modele {
 
     private List<MColonne> colonnes;
 
-    public MGrille(int largeur){
+    private int max_coups_sur_col;
+
+    public MGrille(int hauteur, int largeur){
 
         colonnes = new ArrayList<>();
 
         initialiserColonnes(largeur);
+
+        max_coups_sur_col = hauteur;
 
     }
 
@@ -33,6 +37,15 @@ public class MGrille extends Modele {
         return colonnes;
     }
 
+    public int getMaxCoupsSurCol() {
+        return max_coups_sur_col;
+    }
+
+    public int getNombreCoupsSurCol(int colonne) {
+
+        return getColonnes().get(colonne).getJetons().size();
+
+    }
 
     public void placerJeton(int colonne, GCouleur couleur) {
 

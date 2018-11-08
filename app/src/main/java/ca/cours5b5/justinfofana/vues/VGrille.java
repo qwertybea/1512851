@@ -27,6 +27,7 @@ import ca.cours5b5.justinfofana.modeles.MColonne;
 import ca.cours5b5.justinfofana.modeles.MGrille;
 import ca.cours5b5.justinfofana.modeles.MParametres;
 import ca.cours5b5.justinfofana.modeles.MParametresPartie;
+import ca.cours5b5.justinfofana.modeles.MPartie;
 
 public class VGrille extends GridLayout {
 
@@ -150,18 +151,22 @@ public class VGrille extends GridLayout {
 
                 }
 
-                // on veut savoir si on peut effectuer l'action une nouvele fois il faut donc demander apres que l'action est ete executer
-                if (!actionEntete.peutExecuter()) {
-
-                    entete.setEnabled(false);
-
-                    // FIXME: may not be needed
-                    // set args to null just for safety i guess
-                    actionEntete.setArguments(null);
-                }
-
             }
         });
+
+    }
+
+    public void reagirPermissionEntete(MGrille mGrille) {
+
+        for (int i = 0; i < mGrille.getColonnes().size(); i++) {
+
+            if (mGrille.getMaxCoupsSurCol() == mGrille.getNombreCoupsSurCol(i)) {
+
+                entetes.get(i).setEnabled(false);
+
+            }
+
+        }
 
     }
 

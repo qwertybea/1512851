@@ -17,6 +17,7 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
 
     @Override
     public void chargerModele(final String cheminSauvegarde, final ListenerChargement listenerChargement) {
+
         if(bundle != null && bundle.containsKey(getCle(cheminSauvegarde))){
 
             String json = bundle.getString(getCle(cheminSauvegarde));
@@ -30,11 +31,8 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
             listenerChargement.reagirErreur(new ErreurSerialisation("Erreur de chargement"));
 
         }
+
     }
-    /*
-     * Retourne null si le modèle n'est pas présent
-     *
-     */
 
     @Override
     public void sauvegarderModele(String cheminSauvegarde, Map<String, Object> objetJson) {

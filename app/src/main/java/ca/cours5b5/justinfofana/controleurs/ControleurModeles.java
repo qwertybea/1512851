@@ -37,18 +37,15 @@ public class ControleurModeles {
 
         listeDeSauvegardes = new ArrayList<>();
 
+        listeDeSauvegardes.add(Serveur.getInstance());
+        listeDeSauvegardes.add(Disque.getInstance());
+
     }
 
     private ControleurModeles(){}
 
     public static void setSequenceDeChargement(SourceDeDonnees... sequenceDeChargement) {
         ControleurModeles.sequenceDeChargement = sequenceDeChargement;
-
-        for (SourceDeDonnees sourceDeDonnees : sequenceDeChargement) {
-
-            listeDeSauvegardes.add(sourceDeDonnees);
-
-        }
     }
 
     public static void sauvegarderModeleDansCetteSource(String nomModele, SourceDeDonnees sourceDeDonnees) {
@@ -67,13 +64,22 @@ public class ControleurModeles {
 
     }
 
-    static void getModele(final String nomModele, ListenerGetModele listenerGetModele){
+    static void getModele(final String nomModele, final ListenerGetModele listenerGetModele){
 
         Modele modele = modelesEnMemoire.get(nomModele);
 
         if(modele == null){
 
-            creerModeleEtChargerDonnees(nomModele, listenerGetModele);
+            creerModeleEtChargerDonnees(nomModele, new ListenerGetModele() {
+
+                @Override
+                public void reagirAuModele(Modele modele) {
+
+                    listenerGetModele.reagirAuModele(modele);
+
+                }
+
+            });
 
         } else {
 
@@ -92,11 +98,20 @@ public class ControleurModeles {
 
         }else if(nomModele.equals(MPartie.class.getSimpleName())){
 
-            // TODO: see if this is ok
+            getModele(MParametres.class.getSimpleName(), new ListenerGetModele() {
 
-            MPartie mPartie = new MPartie(new MParametresPartie());
+                @Override
+                public void reagirAuModele(Modele modele) {
 
-            listenerGetModele.reagirAuModele(mPartie);
+                    MParametres mParametres = (MParametres) modele;
+
+                    MPartie mPartie = new MPartie(mParametres.getParametresPartie());
+
+                    listenerGetModele.reagirAuModele(mPartie);
+
+                }
+
+            });
 
         }else{
 
@@ -107,6 +122,8 @@ public class ControleurModeles {
 
     public static void sauvegarderModele(String nomModele){
 
+        GLog.activite(nomModele, listeDeSauvegardes.size());
+
         for(SourceDeDonnees source : listeDeSauvegardes){
 
             sauvegarderModeleDansCetteSource(nomModele, source);
@@ -115,6 +132,8 @@ public class ControleurModeles {
     }
 
     public static void effacerModele(String nomModele){
+
+        ControleurObservation.detruireObservation(modelesEnMemoire.get(nomModele));
 
         modelesEnMemoire.remove(nomModele);
 
@@ -175,7 +194,29 @@ public class ControleurModeles {
     private static void creerModeleEtChargerDonnees(final String nomModele,
                                                     final ListenerGetModele listenerGetModele) {
 
-        creerModeleSelonNom(nomModele, listenerGetModele);
+        creerModeleSelonNom(nomModele, new ListenerGetModele() {
+
+            @Override
+            public void reagirAuModele(Modele modele) {
+
+                modelesEnMemoire.put(nomModele, modele);
+
+                chargerDonnees(modele, nomModele, new ListenerGetModele() {
+
+                    @Override
+                    public void reagirAuModele(Modele modele) {
+
+                        listenerGetModele.reagirAuModele(modele);
+
+                    }
+
+                });
+
+                listenerGetModele.reagirAuModele(modele);
+
+            }
+
+        });
 
     }
     /*
@@ -190,9 +231,6 @@ public class ControleurModeles {
 
         GLog.donnees(nomModele);
 
-        // FIXME: should not be done here
-        modelesEnMemoire.put(nomModele, modele);
-
         chargementViaSequence(modele, getCheminSauvegarde(nomModele), listenerGetModele, 0);
 
     }
@@ -202,7 +240,9 @@ public class ControleurModeles {
             ListenerGetModele listenerGetModele,
             int indiceSourceCourante){
 
-        if (indiceSourceCourante == listeDeSauvegardes.size()) {
+        GLog.activite(indiceSourceCourante, sequenceDeChargement.length);
+
+        if (indiceSourceCourante == sequenceDeChargement.length) {
 
             terminerChargement(modele, listenerGetModele);
 
@@ -219,13 +259,13 @@ public class ControleurModeles {
     final ListenerGetModele listenerGetModele,
     final int indiceSourceCourante) {
 
-        listeDeSauvegardes.get(indiceSourceCourante).chargerModele(cheminDeSauvegarde, new ListenerChargement() {
+        sequenceDeChargement[indiceSourceCourante].chargerModele(cheminDeSauvegarde, new ListenerChargement() {
             @Override
             public void reagirSucces(Map<String, Object> objetJson) {
 
                 terminerChargementAvecDonnees(objetJson, modele, listenerGetModele);
 
-                GLog.donnees("Succes", listeDeSauvegardes.get(indiceSourceCourante), indiceSourceCourante);
+                GLog.donnees("Succes", cheminDeSauvegarde, sequenceDeChargement[indiceSourceCourante], indiceSourceCourante);
 
                 GLog.donnees(Jsonification.enChaine(objetJson));
 
@@ -236,7 +276,7 @@ public class ControleurModeles {
 
                 chargementViaSourceSuivante(modele, cheminDeSauvegarde, listenerGetModele, indiceSourceCourante);
 
-                GLog.donnees("Echec", listeDeSauvegardes.get(indiceSourceCourante), indiceSourceCourante);
+                GLog.donnees("Echec", cheminDeSauvegarde, sequenceDeChargement[indiceSourceCourante], indiceSourceCourante);
 
             }
         });

@@ -91,7 +91,7 @@ public class MPartie extends Modele implements Fournisseur {
 
 
     private void initialiserGrille() {
-        grille = new MGrille(parametres.getLargeur());
+        grille = new MGrille(parametres.getHauteur(), parametres.getLargeur());
     }
 
 
@@ -123,9 +123,6 @@ public class MPartie extends Modele implements Fournisseur {
 
                     }
 
-                    public boolean dernierCoup(int colonne) {
-                        return siCoupLegal(colonne + 1);
-                    }
                 });
     }
 

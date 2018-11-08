@@ -10,6 +10,7 @@ import ca.cours5b5.justinfofana.donnees.Disque;
 import ca.cours5b5.justinfofana.donnees.SauvegardeTemporaire;
 import ca.cours5b5.justinfofana.donnees.Serveur;
 import ca.cours5b5.justinfofana.global.DebugTools;
+import ca.cours5b5.justinfofana.global.GLog;
 import ca.cours5b5.justinfofana.modeles.MParametres;
 
 public abstract class Activite extends AppCompatActivity {
@@ -17,6 +18,8 @@ public abstract class Activite extends AppCompatActivity {
     static { Log.d("Atelier04", Activite.class.getSimpleName() + "::static"); }
 
     protected void initialiserControleurModeles(Bundle savedInstanceState) {
+
+        GLog.activite(savedInstanceState);
 
         ControleurModeles.setSequenceDeChargement(
                 new SauvegardeTemporaire(savedInstanceState),
@@ -75,8 +78,8 @@ public abstract class Activite extends AppCompatActivity {
 
 
         // FIXME: should this be here?
-        ControleurModeles.sauvegarderModeleDansCetteSource(MParametres.class.getSimpleName(),
-                new SauvegardeTemporaire(outState));
+        //ControleurModeles.sauvegarderModeleDansCetteSource(MParametres.class.getSimpleName(),
+        //        new SauvegardeTemporaire(outState));
     }
 
 }

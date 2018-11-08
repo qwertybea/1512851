@@ -51,8 +51,6 @@ public class VPartie extends Vue implements Fournisseur {
 
         initialiserJoueurs();
 
-//        fournirActionCouleurJoueur();
-
         observerPartie();
 
     }
@@ -89,18 +87,20 @@ public class VPartie extends Vue implements Fournisseur {
                     @Override
                     public void reagirNouveauModele(Modele modele) {
 
+                        GLog.activite(modele);
+
                         MPartie partie = getPartie(modele);
 
                         preparerAffichage(partie);
 
-                        miseAJourGrille(partie);
-
-                        miseAJourCouleurJoueurs(partie);
+                        reagirChangementAuModele(modele);
 
                     }
 
                     @Override
                     public void reagirChangementAuModele(Modele modele) {
+
+                        GLog.activite(modele);
 
                         MPartie partie = getPartie(modele);
 
@@ -138,26 +138,14 @@ public class VPartie extends Vue implements Fournisseur {
 
         grille.afficherJetons(partie.getGrille());
 
+        grille.reagirPermissionEntete(partie.getGrille());
+
     }
 
     private void miseAJourCouleurJoueurs(MPartie partie){
 
         changerCouleurJoueur(partie.getJoueurCourant(), partie.getCouleurCourante());
 
-    }
-
-    private void fournirActionCouleurJoueur() {
-
-        ControleurAction.fournirAction(this,
-                GCommande.COULEUR_JOUEUR,
-                new ListenerFournisseur() {
-                    @Override
-                    public void executer(Object... args) {
-
-                        changerCouleurJoueur((int) args[0], (GCouleur) args[1]);
-
-                    }
-                });
     }
 
     private void changerCouleurJoueur(int joueur, GCouleur gCouleur) {

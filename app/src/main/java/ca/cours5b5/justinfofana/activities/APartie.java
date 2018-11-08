@@ -38,8 +38,8 @@ public class APartie extends Activite {
         super.onSaveInstanceState(outState);
 
         // FIXME: perhaps it should
-        ControleurModeles.sauvegarderModeleDansCetteSource(MPartie.class.getSimpleName(),
-                new SauvegardeTemporaire(outState));
+        //ControleurModeles.sauvegarderModeleDansCetteSource(MPartie.class.getSimpleName(),
+        //        new SauvegardeTemporaire(outState));
 
     }
 
