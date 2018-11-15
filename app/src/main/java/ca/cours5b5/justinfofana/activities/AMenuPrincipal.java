@@ -10,18 +10,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import ca.cours5b5.justinfofana.R;
 import ca.cours5b5.justinfofana.controleurs.ControleurAction;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
-import ca.cours5b5.justinfofana.exceptions.ErreurSerialisation;
 import ca.cours5b5.justinfofana.global.GCommande;
 import ca.cours5b5.justinfofana.global.GConstantes;
 import ca.cours5b5.justinfofana.global.GLog;
-import ca.cours5b5.justinfofana.modeles.Modele;
+import ca.cours5b5.justinfofana.modeles.MPartieReseau;
 import ca.cours5b5.justinfofana.vues.VMenuPrincipal;
 
 public class AMenuPrincipal extends Activite implements Fournisseur {
@@ -47,6 +46,8 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
         fournirActionOuvrirMenuParametres();
 
         fournirActionDemarrerPartie();
+
+        fournirActionDemarrerPartieEnLigne();
 
         fournirActionConnexion();
 
@@ -76,6 +77,20 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
                     public void executer(Object... args) {
 
                         transitionPartie();
+
+                    }
+                });
+    }
+
+    private void fournirActionDemarrerPartieEnLigne() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.JOINDRE_OU_CREER_PARTIE_RESEAU,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        transitionPartieReseau();
 
                     }
                 });
@@ -111,15 +126,23 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
 
     private void transitionParametres(){
 
-        Intent intentionParametres = new Intent(this, AParametres.class);
-        startActivity(intentionParametres);
+        lanceActivite(AParametres.class);
 
     }
 
     private void transitionPartie(){
 
-        Intent intentionParametres = new Intent(this, APartie.class);
-        startActivity(intentionParametres);
+        lanceActivite(APartie.class);
+
+    }
+
+    private void transitionPartieReseau(){
+
+        HashMap<String, String> extras = new HashMap<>();
+
+        extras.put(MPartieReseau.class.getSimpleName(), GConstantes.FIXME_JSON_PARTIE_RESEAU);
+
+        lanceActivite(APartieReseau.class, extras);
 
     }
 

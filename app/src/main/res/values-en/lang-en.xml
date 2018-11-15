@@ -7,6 +7,7 @@
     <string name="T_POUR_GAGNER">To win</string>
     <string name="B_PARAMETRE">Parametre</string>
     <string name="B_PARTIE">Play a match</string>
+    <string name="B_PARTIE_RESEAU">Play online</string>
     <string name="B_CONNEXION">Connection</string>
     <string name="B_DECONNEXION">Disconnect</string>
     <string name="B_EFFACER_PARTIE">Delete current match</string>

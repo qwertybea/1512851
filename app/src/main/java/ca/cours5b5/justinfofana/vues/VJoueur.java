@@ -1,10 +1,7 @@
 package ca.cours5b5.justinfofana.vues;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import ca.cours5b5.justinfofana.global.GLog;
 

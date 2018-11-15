@@ -1,33 +1,21 @@
 package ca.cours5b5.justinfofana.vues;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.cours5b5.justinfofana.R;
 import ca.cours5b5.justinfofana.controleurs.Action;
 import ca.cours5b5.justinfofana.controleurs.ControleurAction;
-import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
-import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
-import ca.cours5b5.justinfofana.exceptions.ErreurAction;
-import ca.cours5b5.justinfofana.global.DebugTools;
 import ca.cours5b5.justinfofana.global.GCommande;
 import ca.cours5b5.justinfofana.global.GConstantes;
 import ca.cours5b5.justinfofana.global.GCouleur;
-import ca.cours5b5.justinfofana.global.GLog;
 import ca.cours5b5.justinfofana.modeles.MColonne;
 import ca.cours5b5.justinfofana.modeles.MGrille;
-import ca.cours5b5.justinfofana.modeles.MParametres;
-import ca.cours5b5.justinfofana.modeles.MParametresPartie;
-import ca.cours5b5.justinfofana.modeles.MPartie;
 
 public class VGrille extends GridLayout {
 
@@ -91,6 +79,24 @@ public class VGrille extends GridLayout {
         ajouterEnTetes(largeur);
         ajouterCases(hauteur, largeur);
 
+    }
+
+    void recreerGrille(int hauteur, int largeur) {
+
+        retirerAncienControl();
+
+        initialiser();
+
+        creerGrille(hauteur, largeur);
+
+        // TODO: find out whether this stays in the next episode
+        System.gc();
+
+    }
+
+    public void retirerAncienControl() {
+
+        this.removeAllViewsInLayout();
 
     }
 

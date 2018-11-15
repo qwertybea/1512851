@@ -2,8 +2,6 @@ package ca.cours5b5.justinfofana.global;
 
 import android.util.Log;
 
-import java.text.MessageFormat;
-
 import ca.cours5b5.justinfofana.vues.Vue;
 
 public class DebugTools {

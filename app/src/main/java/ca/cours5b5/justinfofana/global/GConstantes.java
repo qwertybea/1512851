@@ -35,4 +35,19 @@ public class GConstantes {
     public static final String EXTENSION_PAR_DEFAUT=".json";
     public static final int MA_CONSTANTE_CODE_CONNEXION = 123;
 
+    // RESEAU
+    public static final int NOMBRE_DE_VALEURS_A_CHARGER_DU_SERVEUR_PAR_DEFAUT = 10;
+
+    public static final String CLE_ID_JOUEUR_HOTE = "idJoueurHote";
+    public static final String CLE_ID_JOUEUR_INVITE = "idJoueurInvite";
+
+    public static final String CLE_COUPS_JOUEUR_HOTE = "coupsJoueurHote";
+    public static final String CLE_COUPS_JOUEUR_INVITE = "coupsJoueurInvite";
+
+    // TODO: remplacer les IDs par ceux de vos 2 usagers de test
+    // hote :   jf.ecolier
+    // invite : indigo
+    public static final String FIXME_JSON_PARTIE_RESEAU = "{\"listeCoups\":[],\"parametres\":{\"largeur\":\"7\",\"pourGagner\":\"4\",\"hauteur\":\"6\"},\"idJoueurInvite\":\"sP3V1vIdF5eeI01FAkw10iTPuX32\",\"idJoueurHote\":\"J7FTKo3jd5gvAUO7Kdp5MaQyou02\"}";
+
+
 }

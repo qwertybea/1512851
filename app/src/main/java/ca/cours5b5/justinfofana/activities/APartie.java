@@ -1,19 +1,10 @@
 package ca.cours5b5.justinfofana.activities;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
-
-import java.util.Map;
 
 import ca.cours5b5.justinfofana.R;
 import ca.cours5b5.justinfofana.controleurs.ControleurModeles;
-import ca.cours5b5.justinfofana.controleurs.ControleurObservation;
-import ca.cours5b5.justinfofana.donnees.SauvegardeTemporaire;
-import ca.cours5b5.justinfofana.modeles.MParametres;
 import ca.cours5b5.justinfofana.modeles.MPartie;
-import ca.cours5b5.justinfofana.serialisation.Jsonification;
-import ca.cours5b5.justinfofana.vues.VPartie;
 
 public class APartie extends Activite {
 

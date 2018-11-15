@@ -1,7 +1,5 @@
 package ca.cours5b5.justinfofana.controleurs;
 
-import android.util.Log;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,16 +12,15 @@ import ca.cours5b5.justinfofana.donnees.ListenerChargement;
 import ca.cours5b5.justinfofana.donnees.Serveur;
 import ca.cours5b5.justinfofana.donnees.SourceDeDonnees;
 import ca.cours5b5.justinfofana.exceptions.ErreurModele;
-import ca.cours5b5.justinfofana.global.DebugTools;
 import ca.cours5b5.justinfofana.global.GLog;
+import ca.cours5b5.justinfofana.modeles.Identifiable;
 import ca.cours5b5.justinfofana.modeles.MParametres;
-import ca.cours5b5.justinfofana.modeles.MParametresPartie;
 import ca.cours5b5.justinfofana.modeles.MPartie;
 import ca.cours5b5.justinfofana.modeles.Modele;
 import ca.cours5b5.justinfofana.serialisation.Jsonification;
 import ca.cours5b5.justinfofana.usagers.UsagerCourant;
 
-public class ControleurModeles {
+public final class ControleurModeles {
 
     private static Map<String, Modele> modelesEnMemoire;
 
@@ -154,42 +151,27 @@ public class ControleurModeles {
 
     private static String getCheminSauvegarde(String nomModele) {
 
-        return nomModele + File.separator + UsagerCourant.getId();
+        String cheminSauvegarde = nomModele;
 
-//        String cheminSauvegarde = nomModele;
-//
-//        if (Serveur.class.getSimpleName().equals(nomModele)) {
-//
-//            if (UsagerCourant.siUsagerConnecte()) {
-//                cheminSauvegarde += File.separator + UsagerCourant.getId();
-//            }
-//
-//        }
-//
-//        return cheminSauvegarde;
+        Modele modele = modelesEnMemoire.get(nomModele);
+
+        if (modele != null && modele instanceof Identifiable) {
+
+            cheminSauvegarde += File.separator + ((Identifiable) modele).getId();
+
+        } else {
+
+            cheminSauvegarde += File.separator + UsagerCourant.getId();
+
+        }
+
+        return cheminSauvegarde;
     }
     /*
-     * Le chemin est de la forme:
-     *
-     * nomModele/idUsager
-     *
-     * Par exemple:
-     *
-     * MPartie/T1m8GxiBAlhLUcF6Ne0GV06nnEg1
+     * si le modèle est Identifiable, alors le chemin est nomModele/idModele
+     * sinon, le chemin est nomModele/idUsager
      *
      */
-
-
-
-
-    /***** ajouts  *******
-     *
-     * Voir schéma ci-bas
-     * Attention aux trois conditions
-     * Attention à la méthode creerModeleEtChargerDonnees qui doit aussi mémoriser le modèle
-     *
-     */
-
 
     private static void creerModeleEtChargerDonnees(final String nomModele,
                                                     final ListenerGetModele listenerGetModele) {
@@ -211,8 +193,6 @@ public class ControleurModeles {
                     }
 
                 });
-
-                listenerGetModele.reagirAuModele(modele);
 
             }
 

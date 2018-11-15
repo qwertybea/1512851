@@ -1,8 +1,5 @@
 package ca.cours5b5.justinfofana.modeles;
 
-import android.graphics.Color;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,12 +8,10 @@ import java.util.Map;
 
 import ca.cours5b5.justinfofana.controleurs.Action;
 import ca.cours5b5.justinfofana.controleurs.ControleurAction;
-import ca.cours5b5.justinfofana.controleurs.ControleurObservation;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.justinfofana.exceptions.ErreurAction;
 import ca.cours5b5.justinfofana.exceptions.ErreurSerialisation;
-import ca.cours5b5.justinfofana.global.DebugTools;
 import ca.cours5b5.justinfofana.global.GCommande;
 import ca.cours5b5.justinfofana.global.GCouleur;
 import ca.cours5b5.justinfofana.global.GLog;
@@ -52,6 +47,18 @@ public class MPartie extends Modele implements Fournisseur {
         initialiserGrille();
 
         fournirActionPlacerJeton();
+
+    }
+
+    public void recommencerPartie() {
+
+        initialiser();
+
+        initialiserJoueurs();
+
+        initialiserCouleurCourante();
+
+        initialiserGrille();
 
     }
 
@@ -95,7 +102,7 @@ public class MPartie extends Modele implements Fournisseur {
     }
 
 
-    private void fournirActionPlacerJeton() {
+    protected void fournirActionPlacerJeton() {
 
         ControleurAction.fournirAction(this,
                 GCommande.JOUER_COUP_ICI,

@@ -1,17 +1,19 @@
 package ca.cours5b5.justinfofana.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import java.util.Map;
 
 import ca.cours5b5.justinfofana.controleurs.ControleurModeles;
 import ca.cours5b5.justinfofana.donnees.Disque;
 import ca.cours5b5.justinfofana.donnees.SauvegardeTemporaire;
 import ca.cours5b5.justinfofana.donnees.Serveur;
+import ca.cours5b5.justinfofana.donnees.Transition;
 import ca.cours5b5.justinfofana.global.DebugTools;
 import ca.cours5b5.justinfofana.global.GLog;
-import ca.cours5b5.justinfofana.modeles.MParametres;
 
 public abstract class Activite extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public abstract class Activite extends AppCompatActivity {
 
         ControleurModeles.setSequenceDeChargement(
                 new SauvegardeTemporaire(savedInstanceState),
+                new Transition(getIntent().getExtras()),
                 Serveur.getInstance(),
                 Disque.getInstance());
 
@@ -31,6 +34,28 @@ public abstract class Activite extends AppCompatActivity {
     protected void initialiserApplication(){
 
         Disque.getInstance().setRepertoireRacine(getFilesDir());
+
+    }
+
+    protected void lanceActivite(Class destination) {
+
+        Intent intentionParametres = new Intent(this, destination);
+
+        startActivity(intentionParametres);
+
+    }
+
+    protected void lanceActivite(Class destination, Map<String, String> extras) {
+
+        Intent intentionParametres = new Intent(this, destination);
+
+        for (Map.Entry<String, String> extra : extras.entrySet()) {
+
+            intentionParametres.putExtra(extra.getKey(), extra.getValue());
+
+        }
+
+        startActivity(intentionParametres);
 
     }
 

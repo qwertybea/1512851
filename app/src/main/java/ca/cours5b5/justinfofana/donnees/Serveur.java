@@ -9,7 +9,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Map;
 
 import ca.cours5b5.justinfofana.exceptions.ErreurSerialisation;
-import ca.cours5b5.justinfofana.global.GLog;
 import ca.cours5b5.justinfofana.usagers.UsagerCourant;
 
 public class Serveur extends SourceDeDonnees {
@@ -37,7 +36,6 @@ public class Serveur extends SourceDeDonnees {
      * Utiliser FirebaseDatabase et DatabaseReference
      *
      */
-
 
     @Override
     public void chargerModele(final String cheminSauvegarde, final ListenerChargement listenerChargement) {

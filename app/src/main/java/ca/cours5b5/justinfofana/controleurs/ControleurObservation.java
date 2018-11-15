@@ -5,9 +5,6 @@ import java.util.Map;
 
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerGetModele;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerObservateur;
-import ca.cours5b5.justinfofana.modeles.MParametres;
-import ca.cours5b5.justinfofana.modeles.MParametresPartie;
-import ca.cours5b5.justinfofana.modeles.MPartie;
 import ca.cours5b5.justinfofana.modeles.Modele;
 
 public class ControleurObservation {

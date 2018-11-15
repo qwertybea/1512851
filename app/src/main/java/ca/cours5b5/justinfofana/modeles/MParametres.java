@@ -7,7 +7,6 @@ import java.util.Map;
 
 import ca.cours5b5.justinfofana.controleurs.ControleurAction;
 import ca.cours5b5.justinfofana.controleurs.ControleurModeles;
-import ca.cours5b5.justinfofana.controleurs.ControleurObservation;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.justinfofana.exceptions.ErreurAction;

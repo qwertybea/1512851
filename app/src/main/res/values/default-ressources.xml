@@ -10,6 +10,7 @@
     <string name="T_POUR_GAGNER">Pour gagner</string>
     <string name="B_PARAMETRE">Paramètre</string>
     <string name="B_PARTIE">Jouer une partie</string>
+    <string name="B_PARTIE_RESEAU">Jouer en-ligne</string>
     <string name="B_CONNEXION">Connexion</string>
     <string name="B_DECONNEXION">Deconnexion</string>
     <string name="B_EFFACER_PARTIE">Effacer partie courante</string>

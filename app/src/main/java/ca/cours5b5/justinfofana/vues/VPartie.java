@@ -1,26 +1,19 @@
 package ca.cours5b5.justinfofana.vues;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.GridLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.cours5b5.justinfofana.R;
-import ca.cours5b5.justinfofana.controleurs.ControleurAction;
 import ca.cours5b5.justinfofana.controleurs.ControleurObservation;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
-import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.justinfofana.exceptions.ErreurObservation;
-import ca.cours5b5.justinfofana.global.DebugTools;
-import ca.cours5b5.justinfofana.global.GCommande;
 import ca.cours5b5.justinfofana.global.GCouleur;
 import ca.cours5b5.justinfofana.global.GLog;
+import ca.cours5b5.justinfofana.modeles.MGrille;
 import ca.cours5b5.justinfofana.modeles.MParametresPartie;
 import ca.cours5b5.justinfofana.modeles.MPartie;
 import ca.cours5b5.justinfofana.modeles.Modele;
@@ -82,7 +75,7 @@ public class VPartie extends Vue implements Fournisseur {
 
     private void observerPartie() {
 
-        ControleurObservation.observerModele(MPartie.class.getSimpleName(),
+        ControleurObservation.observerModele(getNomModele(),
                 new ListenerObservateur() {
                     @Override
                     public void reagirNouveauModele(Modele modele) {
@@ -112,11 +105,23 @@ public class VPartie extends Vue implements Fournisseur {
                 });
     }
 
+    protected String getNomModele() {
+        return MPartie.class.getSimpleName();
+    }
+
     private void preparerAffichage(MPartie partie) {
 
         MParametresPartie parametresPartie = partie.getParametres();
 
         grille.creerGrille(parametresPartie.getHauteur(), parametresPartie.getLargeur());
+
+    }
+
+    private void reinitialiserAffichage(MPartie partie) {
+
+        MParametresPartie parametresPartie = partie.getParametres();
+
+        grille.recreerGrille(parametresPartie.getHauteur(), parametresPartie.getLargeur());
 
     }
 
@@ -139,6 +144,41 @@ public class VPartie extends Vue implements Fournisseur {
         grille.afficherJetons(partie.getGrille());
 
         grille.reagirPermissionEntete(partie.getGrille());
+
+        verifierPartitFini(partie);
+
+    }
+
+    public void verifierPartitFini(MPartie mPartie) {
+
+        MGrille mGrille = mPartie.getGrille();
+
+        int colonnesJouables = mGrille.getColonnes().size();
+
+        for (int i = 0; i < mGrille.getColonnes().size(); i++) {
+
+            if (mGrille.getMaxCoupsSurCol() == mGrille.getNombreCoupsSurCol(i)) {
+
+                colonnesJouables--;
+
+            }
+        }
+
+        if (colonnesJouables == 0) {
+            reagirPartieFini(mPartie);
+        }
+
+    }
+
+    public void reagirPartieFini(MPartie mPartie) {
+
+        mPartie.recommencerPartie();
+
+        reinitialiserAffichage(mPartie);
+
+        miseAJourGrille(mPartie);
+
+        miseAJourCouleurJoueurs(mPartie);
 
     }
 

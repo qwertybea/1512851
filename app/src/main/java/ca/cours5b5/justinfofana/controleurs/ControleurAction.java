@@ -8,7 +8,6 @@ import java.util.Map;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.justinfofana.global.GCommande;
-import ca.cours5b5.justinfofana.global.GLog;
 import ca.cours5b5.justinfofana.modeles.Modele;
 
 public class ControleurAction {

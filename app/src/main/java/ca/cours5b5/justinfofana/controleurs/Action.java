@@ -15,6 +15,7 @@ public class Action {
         this.args = args;
 
     }
+
     public void executerDesQuePossible() {
         ControleurAction.executerDesQuePossible(this);
     }
