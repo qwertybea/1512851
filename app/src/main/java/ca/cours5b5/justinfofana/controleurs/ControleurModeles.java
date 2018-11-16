@@ -16,6 +16,7 @@ import ca.cours5b5.justinfofana.global.GLog;
 import ca.cours5b5.justinfofana.modeles.Identifiable;
 import ca.cours5b5.justinfofana.modeles.MParametres;
 import ca.cours5b5.justinfofana.modeles.MPartie;
+import ca.cours5b5.justinfofana.modeles.MPartieReseau;
 import ca.cours5b5.justinfofana.modeles.Modele;
 import ca.cours5b5.justinfofana.serialisation.Jsonification;
 import ca.cours5b5.justinfofana.usagers.UsagerCourant;
@@ -102,13 +103,31 @@ public final class ControleurModeles {
 
                     MParametres mParametres = (MParametres) modele;
 
-                    MPartie mPartie = new MPartie(mParametres.getParametresPartie());
+                    MPartie mPartie = new MPartie(mParametres.getParametresPartie().cloner());
 
                     listenerGetModele.reagirAuModele(mPartie);
 
                 }
 
             });
+
+        }else if (nomModele.equals(MPartieReseau.class.getSimpleName())) {
+
+            getModele(MParametres.class.getSimpleName(), new ListenerGetModele() {
+
+                @Override
+                public void reagirAuModele(Modele modele) {
+
+                    MParametres mParametres = (MParametres) modele;
+
+                    MPartieReseau mPartieReseau = new MPartieReseau(mParametres.getParametresPartie().cloner());
+
+                    listenerGetModele.reagirAuModele(mPartieReseau);
+
+                }
+
+            });
+
 
         }else{
 

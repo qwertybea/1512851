@@ -6,6 +6,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.cours5b5.justinfofana.controleurs.Action;
@@ -26,6 +27,9 @@ public class ProxyListe extends Proxy implements Fournisseur {
 
     public ProxyListe(String cheminServeur) {
         super(cheminServeur);
+
+        noeudsAjoutes = new ArrayList<>();
+
     }
 
     public void setActionNouvelItem(GCommande commande){
@@ -36,7 +40,7 @@ public class ProxyListe extends Proxy implements Fournisseur {
 
     public void ajouterValeur(Object valeur) {
 
-        sousNoeud;
+        DatabaseReference sousNoeud = noeudServeur.push();
 
         sousNoeud.setValue(valeur);
 
@@ -55,7 +59,9 @@ public class ProxyListe extends Proxy implements Fournisseur {
 
         creerListener();
 
-        getRequete().addChildEventListener(childEventListener);
+        requete = getRequete();
+
+        requete.addChildEventListener(childEventListener);
 
     }
     /*
@@ -71,6 +77,10 @@ public class ProxyListe extends Proxy implements Fournisseur {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 Object valeurAjoutee = dataSnapshot.getValue();
+
+                actionNouvelItem.setArguments(valeurAjoutee);
+
+                actionNouvelItem.executerDesQuePossible();
 
             }
 
@@ -120,6 +130,8 @@ public class ProxyListe extends Proxy implements Fournisseur {
 
     @Override
     public void detruireValeurs() {
+
+        noeudsAjoutes.clear();
 
     }
 }

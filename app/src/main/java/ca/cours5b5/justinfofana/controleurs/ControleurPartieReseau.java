@@ -1,8 +1,11 @@
 package ca.cours5b5.justinfofana.controleurs;
 
+import java.io.File;
+
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerGetModele;
 import ca.cours5b5.justinfofana.donnees.Serveur;
 import ca.cours5b5.justinfofana.global.GCommande;
+import ca.cours5b5.justinfofana.global.GConstantes;
 import ca.cours5b5.justinfofana.modeles.MPartieReseau;
 import ca.cours5b5.justinfofana.modeles.Modele;
 import ca.cours5b5.justinfofana.proxy.ProxyListe;
@@ -46,7 +49,7 @@ public final class ControleurPartieReseau {
 
         String monId = UsagerCourant.getId();
 
-        if (monId == idJoueurHote) {
+        if (monId.equals(idJoueurHote)) {
 
             connecterEnTantQueJoueurHote(getCheminCoupsJoueurHote(idJoueurHote), getCheminCoupsJoueurInvite(idJoueurHote));
 
@@ -73,9 +76,9 @@ public final class ControleurPartieReseau {
 
     private void connecterEnTantQueJoueurHote(String cheminCoupsJoueurHote, String cheminCoupsJoueurInvite) {
 
-        proxyRecevoirCoups = new ProxyListe(cheminCoupsJoueurHote);
+        proxyEmettreCoups = new ProxyListe(cheminCoupsJoueurHote);
 
-        proxyEmettreCoups = new ProxyListe(cheminCoupsJoueurInvite);
+        proxyRecevoirCoups = new ProxyListe(cheminCoupsJoueurInvite);
 
     }
     /*
@@ -85,9 +88,9 @@ public final class ControleurPartieReseau {
 
     private void connecterEnTantQueJoueurInvite(String cheminCoupsJoueurHote, String cheminCoupsJoueurInvite) {
 
-        proxyRecevoirCoups = new ProxyListe(cheminCoupsJoueurInvite);
+        proxyEmettreCoups = new ProxyListe(cheminCoupsJoueurInvite);
 
-        proxyEmettreCoups = new ProxyListe(cheminCoupsJoueurHote);
+        proxyRecevoirCoups = new ProxyListe(cheminCoupsJoueurHote);
 
     }
     /*
@@ -122,6 +125,8 @@ public final class ControleurPartieReseau {
 
     private String getCheminCoupsJoueurInvite(String idJoueurHote){
 
+        return getCheminPartie(idJoueurHote) + File.separator + GConstantes.CLE_COUPS_JOUEUR_INVITE;
+
     }
     /*
      * Utiliser p.ex. la constante CLE_COUPS_JOUR_INVITE
@@ -129,12 +134,16 @@ public final class ControleurPartieReseau {
 
     private String getCheminCoupsJoueurHote(String idJoueurHote){
 
+        return getCheminPartie(idJoueurHote) + File.separator + GConstantes.CLE_COUPS_JOUEUR_HOTE;
+
     }
     /*
      * Utiliser p.ex. la constante CLE_COUPS_JOUR_HOTE
      */
 
     private String getCheminPartie(String idJoueurHote) {
+
+        return MPartieReseau.class.getSimpleName() + File.separator + idJoueurHote;
 
     }
     /*

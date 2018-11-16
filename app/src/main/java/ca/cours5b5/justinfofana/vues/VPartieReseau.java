@@ -3,6 +3,7 @@ package ca.cours5b5.justinfofana.vues;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import ca.cours5b5.justinfofana.modeles.MPartie;
 import ca.cours5b5.justinfofana.modeles.MPartieReseau;
 
 public class VPartieReseau extends VPartie {
@@ -22,6 +23,15 @@ public class VPartieReseau extends VPartie {
     @Override
     protected String getNomModele(){
         return MPartieReseau.class.getSimpleName();
+    }
+
+    @Override
+    protected void miseAJourGrille(MPartie partie) {
+
+        super.miseAJourGrille(partie);
+
+        
+
     }
 
 }

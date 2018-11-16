@@ -22,7 +22,9 @@
         <activity android:name=".activities.APartie">
             <!--android:screenOrientation="landscape"-->
             <!--&gt;-->
+        </activity><activity android:name=".activities.APartieReseau">
         </activity>
+
     </application>
 
 </manifest>

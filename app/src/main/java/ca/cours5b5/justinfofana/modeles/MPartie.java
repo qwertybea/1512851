@@ -32,7 +32,7 @@ public class MPartie extends Modele implements Fournisseur {
     private int joueurCourant;
     private int nombreJoueur;
 
-    private Action actionCouleurJoueur;
+//    private Action actionCouleurJoueur;
 
     public MPartie(MParametresPartie parametres){
 
@@ -70,7 +70,7 @@ public class MPartie extends Modele implements Fournisseur {
 
     private void initialiserJoueurs() {
 
-        demanderActionCouleurJoueur();
+//        demanderActionCouleurJoueur();
 
         nombreJoueur = 2;
 
@@ -78,19 +78,19 @@ public class MPartie extends Modele implements Fournisseur {
 
     }
 
-    private void demanderActionCouleurJoueur() {
+//    private void demanderActionCouleurJoueur() {
+//
+//        actionCouleurJoueur = ControleurAction.demanderAction(GCommande.COULEUR_JOUEUR);
+//
+//    }
 
-        actionCouleurJoueur = ControleurAction.demanderAction(GCommande.COULEUR_JOUEUR);
-
-    }
-
-    private void appelerActionCouleurJoueur() {
-
-        actionCouleurJoueur.setArguments(joueurCourant, couleurCourante);
-
-        actionCouleurJoueur.executerDesQuePossible();
-
-    }
+//    private void appelerActionCouleurJoueur() {
+//
+//        actionCouleurJoueur.setArguments(joueurCourant, couleurCourante);
+//
+//        actionCouleurJoueur.executerDesQuePossible();
+//
+//    }
 
     private void initialiserCouleurCourante() {
         prochaineCouleurCourante();
@@ -114,7 +114,6 @@ public class MPartie extends Modele implements Fournisseur {
                             int colonne = (Integer) args[0];
 
                             jouerCoup(colonne);
-
 
                         }catch(ClassCastException e){
 
@@ -166,7 +165,7 @@ public class MPartie extends Modele implements Fournisseur {
 
         couleurCourante = GCouleur.values()[joueurCourant];
 
-        appelerActionCouleurJoueur();
+//        appelerActionCouleurJoueur();
 
     }
 

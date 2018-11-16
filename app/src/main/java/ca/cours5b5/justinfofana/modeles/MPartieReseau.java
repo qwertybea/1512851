@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import ca.cours5b5.justinfofana.controleurs.ControleurAction;
+import ca.cours5b5.justinfofana.controleurs.ControleurPartieReseau;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.justinfofana.exceptions.ErreurAction;
@@ -41,6 +42,10 @@ public class MPartieReseau extends MPartie implements Fournisseur, Identifiable 
                     @Override
                     public void executer(Object... args) {
 
+                        int colonne = (Integer) args[0];
+
+                        recevoirCoupReseau(colonne);
+
                     }
                 });
     }
@@ -58,6 +63,7 @@ public class MPartieReseau extends MPartie implements Fournisseur, Identifiable 
 
                             jouerCoup(colonne);
 
+                            ControleurPartieReseau.getInstance().transmettreCoup(colonne);
 
                         }catch(ClassCastException e){
 
@@ -79,6 +85,8 @@ public class MPartieReseau extends MPartie implements Fournisseur, Identifiable 
 
     private void recevoirCoupReseau(int colonne) {
 
+        jouerCoup(colonne);
+
     }
 
     @Override
@@ -86,6 +94,9 @@ public class MPartieReseau extends MPartie implements Fournisseur, Identifiable 
 
         idJoueurHote = (String) objetJson.get(__idJoueurHote);
         idJoueurInvite = (String) objetJson.get(__idJoueurInvite);
+
+        // FIXME: mauvais chargement si la cle nest pas "parametres"
+        getParametres().aPartirObjetJson((Map<String, Object>) objetJson.get("parametres"));
 
         super.aPartirObjetJson(enObjetJson());
 

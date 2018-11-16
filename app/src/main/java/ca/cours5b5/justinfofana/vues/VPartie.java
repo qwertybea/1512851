@@ -139,7 +139,7 @@ public class VPartie extends Vue implements Fournisseur {
 
     }
 
-    private void miseAJourGrille(MPartie partie){
+    protected void miseAJourGrille(MPartie partie){
 
         grille.afficherJetons(partie.getGrille());
 
