@@ -12,7 +12,9 @@ import ca.cours5b5.justinfofana.exceptions.ErreurAction;
 import ca.cours5b5.justinfofana.exceptions.ErreurSerialisation;
 import ca.cours5b5.justinfofana.global.GCommande;
 import ca.cours5b5.justinfofana.global.GConstantes;
+import ca.cours5b5.justinfofana.global.GLog;
 import ca.cours5b5.justinfofana.serialisation.AttributSerialisable;
+import ca.cours5b5.justinfofana.serialisation.Jsonification;
 
 public class MPartieReseau extends MPartie implements Fournisseur, Identifiable {
 
@@ -26,6 +28,8 @@ public class MPartieReseau extends MPartie implements Fournisseur, Identifiable 
 
     public MPartieReseau(MParametresPartie parametres) {
         super(parametres);
+
+        fournirActionRecevoirCoup();
     }
 
     public String getId() {
@@ -42,7 +46,7 @@ public class MPartieReseau extends MPartie implements Fournisseur, Identifiable 
                     @Override
                     public void executer(Object... args) {
 
-                        int colonne = (Integer) args[0];
+                        int colonne = ((Long) args[0]).intValue();
 
                         recevoirCoupReseau(colonne);
 

@@ -14,6 +14,8 @@ import ca.cours5b5.justinfofana.controleurs.ControleurAction;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.global.GCommande;
 import ca.cours5b5.justinfofana.global.GConstantes;
+import ca.cours5b5.justinfofana.global.GLog;
+import ca.cours5b5.justinfofana.serialisation.Jsonification;
 
 public class ProxyListe extends Proxy implements Fournisseur {
 
@@ -78,9 +80,13 @@ public class ProxyListe extends Proxy implements Fournisseur {
 
                 Object valeurAjoutee = dataSnapshot.getValue();
 
-                actionNouvelItem.setArguments(valeurAjoutee);
+                if (actionNouvelItem != null) {
 
-                actionNouvelItem.executerDesQuePossible();
+                    actionNouvelItem.setArguments(valeurAjoutee);
+
+                    actionNouvelItem.executerDesQuePossible();
+
+                }
 
             }
 

@@ -59,10 +59,11 @@ public final class ControleurPartieReseau {
 
         }
 
+        proxyRecevoirCoups.setActionNouvelItem(GCommande.RECEVOIR_COUP_RESEAU);
+
         proxyEmettreCoups.connecterAuServeur();
         proxyRecevoirCoups.connecterAuServeur();
 
-        proxyRecevoirCoups.setActionNouvelItem(GCommande.RECEVOIR_COUP_RESEAU);
 
     }
     /*
@@ -151,6 +152,8 @@ public final class ControleurPartieReseau {
      */
 
     public void detruireSauvegardeServeur() {
+
+        Serveur.getInstance().effacerModele(getCheminPartie(UsagerCourant.getId()));
 
     }
     /*
