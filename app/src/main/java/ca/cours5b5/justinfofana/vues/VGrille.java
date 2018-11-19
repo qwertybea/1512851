@@ -162,6 +162,12 @@ public class VGrille extends GridLayout {
 
     }
 
+    public void verouillerEntetes() {
+        for (VEntete entete: entetes) {
+            entete.setEnabled(false);
+        }
+    }
+
     public void reagirPermissionEntete(MGrille mGrille) {
 
         for (int i = 0; i < mGrille.getColonnes().size(); i++) {

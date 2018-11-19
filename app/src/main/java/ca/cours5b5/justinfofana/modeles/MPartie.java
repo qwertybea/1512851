@@ -32,6 +32,8 @@ public class MPartie extends Modele implements Fournisseur {
     private int joueurCourant;
     private int nombreJoueur;
 
+    public boolean matchFini;
+
 //    private Action actionCouleurJoueur;
 
     public MPartie(MParametresPartie parametres){
@@ -65,6 +67,8 @@ public class MPartie extends Modele implements Fournisseur {
     private void initialiser() {
 
         listeCoups = new ArrayList<>();
+
+        matchFini = false;
 
     }
 
@@ -140,8 +144,17 @@ public class MPartie extends Modele implements Fournisseur {
 
             grille.placerJeton(colonne, couleurCourante);
 
-            prochainJoueurCourant();
-            prochaineCouleurCourante();
+            if (grille.siCouleurGagne(getCouleurCourante(), parametres.getPourGagner())) {
+
+                GLog.activite(getJoueurCourant(), "gagnant");
+                matchFini = true;
+
+            } else {
+
+                prochainJoueurCourant();
+                prochaineCouleurCourante();
+
+            }
 
         }
     }

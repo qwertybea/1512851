@@ -145,8 +145,16 @@ public class VPartie extends Vue implements Fournisseur {
 
         grille.reagirPermissionEntete(partie.getGrille());
 
+        verifierMatchFini(partie);
+
         verifierPartitFini(partie);
 
+    }
+
+    public void verifierMatchFini(MPartie mPartie) {
+        if (mPartie.matchFini) {
+            grille.verouillerEntetes();
+        }
     }
 
     public void verifierPartitFini(MPartie mPartie) {
