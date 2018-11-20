@@ -8,6 +8,7 @@ import java.util.Map;
 
 import ca.cours5b5.justinfofana.controleurs.Action;
 import ca.cours5b5.justinfofana.controleurs.ControleurAction;
+import ca.cours5b5.justinfofana.controleurs.ControleurPartie;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.justinfofana.exceptions.ErreurAction;
@@ -146,8 +147,8 @@ public class MPartie extends Modele implements Fournisseur {
 
             if (grille.siCouleurGagne(getCouleurCourante(), parametres.getPourGagner())) {
 
-                GLog.activite(getJoueurCourant(), "gagnant");
                 matchFini = true;
+                ControleurPartie.getInstance().gagnerPartie(couleurCourante);
 
             } else {
 

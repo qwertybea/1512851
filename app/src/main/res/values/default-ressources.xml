@@ -19,9 +19,11 @@
     <string name="joueur1">joueur1</string>
     <string name="joueur2">joueur2</string>
 
+    <string name="MSG_GAGNANT">Les {0} ont gagné</string>
 
 
-
+    <string name="TXT_ROUGE">rouge</string>
+    <string name="TXT_JAUNE">jaune</string>
 
     <string name="entete" translatable="false">↓\n↓</string>
 </resources>

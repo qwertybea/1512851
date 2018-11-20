@@ -28,9 +28,7 @@ public class APartie extends Activite {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        // FIXME: perhaps it should
-        //ControleurModeles.sauvegarderModeleDansCetteSource(MPartie.class.getSimpleName(),
-        //        new SauvegardeTemporaire(outState));
+
 
     }
 

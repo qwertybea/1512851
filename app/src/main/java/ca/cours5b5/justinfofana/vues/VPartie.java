@@ -1,22 +1,28 @@
 package ca.cours5b5.justinfofana.vues;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.util.AttributeSet;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.cours5b5.justinfofana.R;
+import ca.cours5b5.justinfofana.controleurs.ControleurAction;
 import ca.cours5b5.justinfofana.controleurs.ControleurObservation;
 import ca.cours5b5.justinfofana.controleurs.interfaces.Fournisseur;
+import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.justinfofana.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.justinfofana.exceptions.ErreurObservation;
+import ca.cours5b5.justinfofana.global.GCommande;
 import ca.cours5b5.justinfofana.global.GCouleur;
 import ca.cours5b5.justinfofana.global.GLog;
 import ca.cours5b5.justinfofana.modeles.MGrille;
 import ca.cours5b5.justinfofana.modeles.MParametresPartie;
 import ca.cours5b5.justinfofana.modeles.MPartie;
 import ca.cours5b5.justinfofana.modeles.Modele;
+import ca.cours5b5.justinfofana.serialisation.RequeteTraduction;
 
 public class VPartie extends Vue implements Fournisseur {
 
@@ -46,6 +52,8 @@ public class VPartie extends Vue implements Fournisseur {
 
         observerPartie();
 
+        fournirActionAfficherGagnant();
+
     }
 
     private void initialiser() {
@@ -70,6 +78,25 @@ public class VPartie extends Vue implements Fournisseur {
         for (int i = 0; i < joueurs.size(); i++) {
             GLog.vue(joueurs.get(i));
         }
+
+    }
+
+    private void fournirActionAfficherGagnant() {
+
+        ControleurAction.fournirAction(this, GCommande.AFFICHER_GAGNANT, new ListenerFournisseur() {
+            @Override
+            public void executer(Object... args) {
+
+                GCouleur couleur = (GCouleur) args[0];
+
+                String message = RequeteTraduction.getMsgGagnat(getContext(), couleur);
+
+                Snackbar fenetreMessage = Snackbar.make(VPartie.this, message, Snackbar.LENGTH_SHORT);
+
+                fenetreMessage.show();
+
+            }
+        });
 
     }
 

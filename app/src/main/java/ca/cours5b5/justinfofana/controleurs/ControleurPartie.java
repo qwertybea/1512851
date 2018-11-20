@@ -1,5 +1,6 @@
 package ca.cours5b5.justinfofana.controleurs;
 
+import ca.cours5b5.justinfofana.global.GCommande;
 import ca.cours5b5.justinfofana.global.GCouleur;
 
 public class ControleurPartie {
@@ -13,6 +14,12 @@ public class ControleurPartie {
     }
 
     public void gagnerPartie(GCouleur couleurGagnante){
+
+        Action actionAffichageGagnat = ControleurAction.demanderAction(GCommande.AFFICHER_GAGNANT);
+
+        actionAffichageGagnat.setArguments(couleurGagnante);
+
+        actionAffichageGagnat.executerDesQuePossible();
 
     }
     /*

@@ -5,7 +5,9 @@ import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import ca.cours5b5.justinfofana.controleurs.ControleurAction;
 import ca.cours5b5.justinfofana.global.DebugTools;
+import ca.cours5b5.justinfofana.global.GCommande;
 
 public abstract class Vue extends ConstraintLayout {
 
@@ -29,5 +31,7 @@ public abstract class Vue extends ConstraintLayout {
         super.onFinishInflate();
 
         DebugTools.messageLog(this,"onFinishInflate");
+
+
     }
 }
